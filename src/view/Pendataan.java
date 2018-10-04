@@ -40,8 +40,6 @@ public class Pendataan extends javax.swing.JFrame {
         Date tanggal = (calendar.getDate());
         return tanggal;
     }
-    
-    
 
     public void tambahListener(ActionListener a) {
         tambahJurnal.addActionListener(a);
@@ -55,12 +53,24 @@ public class Pendataan extends javax.swing.JFrame {
         cariBulan.addActionListener(a);
     }
     
-    public JButton tanggalButton(){
+    public void laporanListener(ActionListener a){
+        laporan.addActionListener(a);
+    }
+
+    public JButton tanggalButton() {
         return cari;
     }
-    
-    public JButton bulanButton(){
+
+    public JButton bulanButton() {
         return cariBulan;
+    }
+
+    public JButton pendataan() {
+        return pendataan;
+    }
+
+    public JButton laporan() {
+        return laporan;
     }
 
     public JLabel getNama() {
@@ -111,12 +121,10 @@ public class Pendataan extends javax.swing.JFrame {
         jScrollPane1 = new javax.swing.JScrollPane();
         jurnal = new javax.swing.JTable();
         tambahJurnal = new javax.swing.JButton();
-        jLabel1 = new javax.swing.JLabel();
         jLabel2 = new javax.swing.JLabel();
         cariBulan = new javax.swing.JButton();
         cari = new javax.swing.JButton();
         calendar = new org.jdesktop.swingx.JXDatePicker();
-        jLabel3 = new javax.swing.JLabel();
         pangkat = new javax.swing.JLabel();
         jabatan = new javax.swing.JLabel();
         nip = new javax.swing.JLabel();
@@ -125,6 +133,8 @@ public class Pendataan extends javax.swing.JFrame {
         jLabel6 = new javax.swing.JLabel();
         jLabel7 = new javax.swing.JLabel();
         jLabel8 = new javax.swing.JLabel();
+        laporan = new javax.swing.JButton();
+        pendataan = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setPreferredSize(new java.awt.Dimension(600, 500));
@@ -132,24 +142,29 @@ public class Pendataan extends javax.swing.JFrame {
 
         jurnal.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null}
+                {null, null, null},
+                {null, null, null},
+                {null, null, null},
+                {null, null, null}
             },
             new String [] {
-                "Title 1", "Title 2", "Title 3", "Title 4"
+                "Tanggal", "Nama", "Kegiatan"
             }
-        ));
+        ) {
+            boolean[] canEdit = new boolean [] {
+                false, false, false
+            };
+
+            public boolean isCellEditable(int rowIndex, int columnIndex) {
+                return canEdit [columnIndex];
+            }
+        });
         jScrollPane1.setViewportView(jurnal);
 
         getContentPane().add(jScrollPane1, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 230, 460, 230));
 
         tambahJurnal.setText("tambah jurnal");
         getContentPane().add(tambahJurnal, new org.netbeans.lib.awtextra.AbsoluteConstraints(460, 200, -1, -1));
-
-        jLabel1.setText("Laporan");
-        getContentPane().add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(130, 10, -1, -1));
 
         jLabel2.setText("Tanggal:");
         getContentPane().add(jLabel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 200, -1, -1));
@@ -168,9 +183,6 @@ public class Pendataan extends javax.swing.JFrame {
             }
         });
         getContentPane().add(calendar, new org.netbeans.lib.awtextra.AbsoluteConstraints(80, 200, 160, -1));
-
-        jLabel3.setText("Pendataan");
-        getContentPane().add(jLabel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 10, -1, -1));
         getContentPane().add(pangkat, new org.netbeans.lib.awtextra.AbsoluteConstraints(90, 170, 160, 20));
         getContentPane().add(jabatan, new org.netbeans.lib.awtextra.AbsoluteConstraints(90, 140, 160, 20));
         getContentPane().add(nip, new org.netbeans.lib.awtextra.AbsoluteConstraints(80, 110, 160, 20));
@@ -187,6 +199,12 @@ public class Pendataan extends javax.swing.JFrame {
 
         jLabel8.setText("Nama:");
         getContentPane().add(jLabel8, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 70, -1, -1));
+
+        laporan.setText("Laporan");
+        getContentPane().add(laporan, new org.netbeans.lib.awtextra.AbsoluteConstraints(130, 20, -1, -1));
+
+        pendataan.setText("Pendataan");
+        getContentPane().add(pendataan, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 20, -1, -1));
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
@@ -235,9 +253,7 @@ public class Pendataan extends javax.swing.JFrame {
     private org.jdesktop.swingx.JXDatePicker calendar;
     private javax.swing.JButton cari;
     private javax.swing.JButton cariBulan;
-    private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
-    private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel5;
     private javax.swing.JLabel jLabel6;
     private javax.swing.JLabel jLabel7;
@@ -245,9 +261,11 @@ public class Pendataan extends javax.swing.JFrame {
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JLabel jabatan;
     private javax.swing.JTable jurnal;
+    private javax.swing.JButton laporan;
     private javax.swing.JLabel nama;
     private javax.swing.JLabel nip;
     private javax.swing.JLabel pangkat;
+    private javax.swing.JButton pendataan;
     private javax.swing.JButton tambahJurnal;
     // End of variables declaration//GEN-END:variables
 }
