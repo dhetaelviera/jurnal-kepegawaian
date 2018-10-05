@@ -63,10 +63,6 @@ public class laporan extends javax.swing.JFrame {
         bulan.addActionListener(a);
     }
 
-    public void tahun(ActionListener a) {
-        tahun.addActionListener(a);
-    }
-
     public void range(ActionListener a) {
         range.addActionListener(a);
     }
@@ -78,13 +74,13 @@ public class laporan extends javax.swing.JFrame {
     public void exportListener (ActionListener a){
         export.addActionListener(a);
     }
+    
+    public void pendataanListener(ActionListener a){
+        pendataan.addActionListener(a);
+    }
 
     public JButton bulanButton() {
         return bulan;
-    }
-
-    public JButton tahunButton() {
-        return tahun;
     }
 
     public JButton rangeButton() {
@@ -167,7 +163,6 @@ public class laporan extends javax.swing.JFrame {
         bulan = new javax.swing.JButton();
         calendar1 = new org.jdesktop.swingx.JXDatePicker();
         calendar2 = new org.jdesktop.swingx.JXDatePicker();
-        tahun = new javax.swing.JButton();
         jLabel3 = new javax.swing.JLabel();
         jLabel4 = new javax.swing.JLabel();
 
@@ -201,10 +196,10 @@ public class laporan extends javax.swing.JFrame {
         });
         jScrollPane1.setViewportView(jurnal);
 
-        getContentPane().add(jScrollPane1, new org.netbeans.lib.awtextra.AbsoluteConstraints(42, 257, 530, 230));
+        getContentPane().add(jScrollPane1, new org.netbeans.lib.awtextra.AbsoluteConstraints(42, 257, 530, 200));
 
         export.setText("export ke excel");
-        getContentPane().add(export, new org.netbeans.lib.awtextra.AbsoluteConstraints(580, 300, -1, -1));
+        getContentPane().add(export, new org.netbeans.lib.awtextra.AbsoluteConstraints(360, 200, 120, 20));
 
         range.setText("cari");
         getContentPane().add(range, new org.netbeans.lib.awtextra.AbsoluteConstraints(470, 230, -1, -1));
@@ -257,9 +252,6 @@ public class laporan extends javax.swing.JFrame {
             }
         });
         getContentPane().add(calendar2, new org.netbeans.lib.awtextra.AbsoluteConstraints(300, 230, 160, -1));
-
-        tahun.setText("cari tahun");
-        getContentPane().add(tahun, new org.netbeans.lib.awtextra.AbsoluteConstraints(370, 200, -1, -1));
 
         jLabel3.setText("Tanggal:");
         getContentPane().add(jLabel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 200, -1, -1));
@@ -339,6 +331,5 @@ public class laporan extends javax.swing.JFrame {
     private javax.swing.JLabel pangkat;
     private javax.swing.JButton pendataan;
     private javax.swing.JButton range;
-    private javax.swing.JButton tahun;
     // End of variables declaration//GEN-END:variables
 }

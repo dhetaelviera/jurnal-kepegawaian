@@ -9,6 +9,8 @@ import java.awt.event.ActionListener;
 import java.sql.Connection;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 import java.util.Date;
 import javax.swing.JButton;
 import javax.swing.JLabel;
@@ -40,6 +42,11 @@ public class Pendataan extends javax.swing.JFrame {
         Date tanggal = (calendar.getDate());
         return tanggal;
     }
+    
+    public void setTanggal(String tanggal){
+        
+            this.tanggalnow.setText(tanggal);
+    }
 
     public void tambahListener(ActionListener a) {
         tambahJurnal.addActionListener(a);
@@ -56,13 +63,29 @@ public class Pendataan extends javax.swing.JFrame {
     public void laporanListener(ActionListener a){
         laporan.addActionListener(a);
     }
+    
+    public void tahunListener(ActionListener a){
+        tahun.addActionListener(a);
+    }
+    
+    public void resetListener(ActionListener a){
+        reset.addActionListener(a);
+    }
 
     public JButton tanggalButton() {
         return cari;
     }
+    
+    public JButton reset(){
+        return reset;
+    }
 
     public JButton bulanButton() {
         return cariBulan;
+    }
+    
+    public JButton tahun(){
+        return tahun;
     }
 
     public JButton pendataan() {
@@ -135,6 +158,9 @@ public class Pendataan extends javax.swing.JFrame {
         jLabel8 = new javax.swing.JLabel();
         laporan = new javax.swing.JButton();
         pendataan = new javax.swing.JButton();
+        tahun = new javax.swing.JButton();
+        reset = new javax.swing.JButton();
+        tanggalnow = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setPreferredSize(new java.awt.Dimension(600, 500));
@@ -164,13 +190,13 @@ public class Pendataan extends javax.swing.JFrame {
         getContentPane().add(jScrollPane1, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 230, 460, 230));
 
         tambahJurnal.setText("tambah jurnal");
-        getContentPane().add(tambahJurnal, new org.netbeans.lib.awtextra.AbsoluteConstraints(460, 200, -1, -1));
+        getContentPane().add(tambahJurnal, new org.netbeans.lib.awtextra.AbsoluteConstraints(490, 240, -1, -1));
 
         jLabel2.setText("Tanggal:");
         getContentPane().add(jLabel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 200, -1, -1));
 
         cariBulan.setText("cari bulan");
-        getContentPane().add(cariBulan, new org.netbeans.lib.awtextra.AbsoluteConstraints(350, 200, -1, -1));
+        getContentPane().add(cariBulan, new org.netbeans.lib.awtextra.AbsoluteConstraints(360, 200, -1, -1));
 
         cari.setText("cari tanggal");
         getContentPane().add(cari, new org.netbeans.lib.awtextra.AbsoluteConstraints(250, 200, -1, -1));
@@ -186,7 +212,7 @@ public class Pendataan extends javax.swing.JFrame {
         getContentPane().add(pangkat, new org.netbeans.lib.awtextra.AbsoluteConstraints(90, 170, 160, 20));
         getContentPane().add(jabatan, new org.netbeans.lib.awtextra.AbsoluteConstraints(90, 140, 160, 20));
         getContentPane().add(nip, new org.netbeans.lib.awtextra.AbsoluteConstraints(80, 110, 160, 20));
-        getContentPane().add(nama, new org.netbeans.lib.awtextra.AbsoluteConstraints(70, 70, 160, 20));
+        getContentPane().add(nama, new org.netbeans.lib.awtextra.AbsoluteConstraints(80, 70, 160, 20));
 
         jLabel5.setText("NIP:");
         getContentPane().add(jLabel5, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 110, -1, -1));
@@ -205,6 +231,13 @@ public class Pendataan extends javax.swing.JFrame {
 
         pendataan.setText("Pendataan");
         getContentPane().add(pendataan, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 20, -1, -1));
+
+        tahun.setText("cari tahun");
+        getContentPane().add(tahun, new org.netbeans.lib.awtextra.AbsoluteConstraints(450, 200, -1, -1));
+
+        reset.setText("reset tabel");
+        getContentPane().add(reset, new org.netbeans.lib.awtextra.AbsoluteConstraints(490, 290, -1, -1));
+        getContentPane().add(tanggalnow, new org.netbeans.lib.awtextra.AbsoluteConstraints(390, 20, 160, 20));
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
@@ -266,6 +299,9 @@ public class Pendataan extends javax.swing.JFrame {
     private javax.swing.JLabel nip;
     private javax.swing.JLabel pangkat;
     private javax.swing.JButton pendataan;
+    private javax.swing.JButton reset;
+    private javax.swing.JButton tahun;
     private javax.swing.JButton tambahJurnal;
+    private javax.swing.JLabel tanggalnow;
     // End of variables declaration//GEN-END:variables
 }

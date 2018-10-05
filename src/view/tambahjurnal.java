@@ -8,6 +8,7 @@ package view;
 import java.awt.event.ActionListener;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
+import javax.swing.JButton;
 import javax.swing.JLabel;
 import javax.swing.JTextField;
 
@@ -63,6 +64,18 @@ public class tambahjurnal extends javax.swing.JFrame {
     public void tambahListener(ActionListener a) {
         tambah.addActionListener(a);
     }
+    
+    public void kembaliListener(ActionListener a){
+        kembali.addActionListener(a);
+    }
+    
+    public JButton pendataan(){
+        return pendataan;
+    }
+    
+    public JButton laporan(){
+        return laporan;
+    }
 
     /**
      * This method is called from within the constructor to initialize the form.
@@ -86,6 +99,9 @@ public class tambahjurnal extends javax.swing.JFrame {
         jLabel7 = new javax.swing.JLabel();
         pangkat = new javax.swing.JLabel();
         tambah = new javax.swing.JButton();
+        kembali = new javax.swing.JButton();
+        pendataan = new javax.swing.JButton();
+        laporan = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setPreferredSize(new java.awt.Dimension(600, 500));
@@ -100,8 +116,8 @@ public class tambahjurnal extends javax.swing.JFrame {
         getContentPane().add(jLabel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 170, -1, -1));
 
         jLabel8.setText("Nama:");
-        getContentPane().add(jLabel8, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 40, -1, -1));
-        getContentPane().add(nama, new org.netbeans.lib.awtextra.AbsoluteConstraints(80, 40, 160, 20));
+        getContentPane().add(jLabel8, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 50, -1, -1));
+        getContentPane().add(nama, new org.netbeans.lib.awtextra.AbsoluteConstraints(70, 50, 160, 20));
 
         jLabel5.setText("NIP:");
         getContentPane().add(jLabel5, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 80, -1, -1));
@@ -116,7 +132,16 @@ public class tambahjurnal extends javax.swing.JFrame {
         getContentPane().add(pangkat, new org.netbeans.lib.awtextra.AbsoluteConstraints(100, 140, 160, 20));
 
         tambah.setText("simpan");
-        getContentPane().add(tambah, new org.netbeans.lib.awtextra.AbsoluteConstraints(100, 340, -1, -1));
+        getContentPane().add(tambah, new org.netbeans.lib.awtextra.AbsoluteConstraints(170, 340, -1, -1));
+
+        kembali.setText("kembali");
+        getContentPane().add(kembali, new org.netbeans.lib.awtextra.AbsoluteConstraints(100, 340, -1, -1));
+
+        pendataan.setText("pendataan");
+        getContentPane().add(pendataan, new org.netbeans.lib.awtextra.AbsoluteConstraints(70, 10, -1, -1));
+
+        laporan.setText("laporan");
+        getContentPane().add(laporan, new org.netbeans.lib.awtextra.AbsoluteConstraints(180, 10, -1, -1));
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
@@ -165,9 +190,12 @@ public class tambahjurnal extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel8;
     private javax.swing.JLabel jabatan;
     private javax.swing.JTextField kegiatan;
+    private javax.swing.JButton kembali;
+    private javax.swing.JButton laporan;
     private javax.swing.JLabel nama;
     private javax.swing.JLabel nip;
     private javax.swing.JLabel pangkat;
+    private javax.swing.JButton pendataan;
     private javax.swing.JButton tambah;
     private javax.swing.JLabel tanggal;
     // End of variables declaration//GEN-END:variables

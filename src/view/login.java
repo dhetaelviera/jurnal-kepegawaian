@@ -6,6 +6,10 @@
 package view;
 
 import java.awt.event.ActionListener;
+import java.sql.Connection;
+import javax.swing.DefaultComboBoxModel;
+import javax.swing.JComboBox;
+import model.pegawai;
 
 /**
  *
@@ -16,16 +20,34 @@ public class login extends javax.swing.JFrame {
     /**
      * Creates new form login
      */
+    pegawai mPegawai;
+    Connection koneksi;
+    String [][] namakombo;
     public login() {
+        mPegawai=new pegawai();
+        username=new JComboBox();
+        namakombo=mPegawai.getNamaLogin();
         initComponents();
     }
     
-    public void loginListener(ActionListener a){
-        masuk.addActionListener(a);
+    
+      public void setNama(String namakombo[][]) {
+        this.namakombo=namakombo;
+        username.setModel(new DefaultComboBoxModel<>(namakombo[1]));
+
+    }
+
+    public String getNama() {
+        int indeks = username.getSelectedIndex();
+        System.out.println("lllll" + indeks);
+        System.out.println("panjangnya" + namakombo[0].length);
+        
+        return namakombo[1][indeks];
     }
     
-    public String nama(){
-        return nama.getText();
+    
+    public void loginListener(ActionListener a){
+        masuk.addActionListener(a);
     }
     
     public String nip(){
@@ -42,10 +64,10 @@ public class login extends javax.swing.JFrame {
     private void initComponents() {
 
         jLabel1 = new javax.swing.JLabel();
-        nama = new javax.swing.JTextField();
         jLabel2 = new javax.swing.JLabel();
         masuk = new javax.swing.JButton();
         nip = new javax.swing.JPasswordField();
+        username = new javax.swing.JComboBox(namakombo[1]);
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setMinimumSize(new java.awt.Dimension(400, 300));
@@ -54,7 +76,6 @@ public class login extends javax.swing.JFrame {
 
         jLabel1.setText("NIP:");
         getContentPane().add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(100, 110, 60, -1));
-        getContentPane().add(nama, new org.netbeans.lib.awtextra.AbsoluteConstraints(160, 80, 120, -1));
 
         jLabel2.setText("nama:");
         getContentPane().add(jLabel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(100, 80, -1, -1));
@@ -63,8 +84,22 @@ public class login extends javax.swing.JFrame {
         getContentPane().add(masuk, new org.netbeans.lib.awtextra.AbsoluteConstraints(160, 150, -1, -1));
         getContentPane().add(nip, new org.netbeans.lib.awtextra.AbsoluteConstraints(160, 110, 120, -1));
 
+        username.setBackground(new java.awt.Color(51, 153, 0));
+        username.setFont(new java.awt.Font("Segoe UI Semibold", 0, 14)); // NOI18N
+        username.setForeground(new java.awt.Color(255, 255, 102));
+        username.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                usernameActionPerformed(evt);
+            }
+        });
+        getContentPane().add(username, new org.netbeans.lib.awtextra.AbsoluteConstraints(160, 80, 120, 20));
+
         pack();
     }// </editor-fold>//GEN-END:initComponents
+
+    private void usernameActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_usernameActionPerformed
+
+    }//GEN-LAST:event_usernameActionPerformed
 
     /**
      * @param args the command line arguments
@@ -105,7 +140,7 @@ public class login extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JButton masuk;
-    private javax.swing.JTextField nama;
     private javax.swing.JPasswordField nip;
+    private javax.swing.JComboBox<String> username;
     // End of variables declaration//GEN-END:variables
 }

@@ -102,6 +102,29 @@ public class pegawai {
         return id;
     }
 
+    public String[][] getNamaLogin() {
+        String query = "select nip,nama from pegawai";
+        String jenis[][] = null;
+
+        try {
+            PreparedStatement st = koneksi.prepareStatement(query, ResultSet.TYPE_SCROLL_INSENSITIVE, ResultSet.CONCUR_UPDATABLE);
+            ResultSet rs = st.executeQuery();
+            rs.last();
+            jenis = new String[2][rs.getRow()];
+            rs.beforeFirst();
+            int i = 0;
+            while (rs.next()) {
+                jenis[0][i] = rs.getString("nip");
+                jenis[1][i] = rs.getString("nama");
+                i++;
+            }
+        } catch (SQLException ex) {
+            ex.printStackTrace();
+            ex.getMessage();
+        }
+        return jenis;
+    }
+
     public String getNIP(String nip) {
         String query = "SELECT nip FROM pegawai WHERE nip=?";
         String id = "kosong";
@@ -222,7 +245,7 @@ public class pegawai {
 
     public DefaultTableModel bacaTabelJurnalBulan(String nip, Date tanggal) throws ParseException {
         String query = "SELECT j.tanggal, p.nama, j.kegiatan"
-                + "  FROM pegawai p join jurnal j on p.nip=j.pegawai WHERE p.nip=? and SUBSTRING(j.tanggal,6,2)=? ORDER BY tanggal  desc;";
+                + "  FROM pegawai p join jurnal j on p.nip=j.pegawai WHERE p.nip=? and SUBSTRING(j.tanggal,6,2)=? ORDER BY tanggal  asc;";
         String namaKolom[] = {"Tanggal", "Nama", "Kegiatan"};
         DefaultTableModel tabel = new DefaultTableModel(null, namaKolom);
         try {
@@ -267,7 +290,7 @@ public class pegawai {
             java.sql.Date sqlDate = new java.sql.Date(date.getTime());
             System.out.println(sqlDate + " ayam ");
             String tanggal1 = format.format(sqlDate);
-            String tanggal2 = tanggal1.substring(5, 7);
+            String tanggal2 = tanggal1.substring(0,4);
             System.out.println(tanggal2 + " ayam22 ");
             st.setString(1, nip);
             st.setString(2, tanggal2);

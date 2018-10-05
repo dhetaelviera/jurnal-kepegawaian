@@ -12,6 +12,7 @@ import java.sql.SQLException;
 import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.time.temporal.TemporalAccessor;
 import java.util.Date;
@@ -30,7 +31,7 @@ import view.tambahjurnal;
  * @author Dheta
  */
 public class controllerUser {
-
+    
     private login login;
     private pegawai mPegawai;
     private Pendataan pendataan;
@@ -38,7 +39,7 @@ public class controllerUser {
     private tambahjurnal tambahjurnal;
     String nip, nama, jabatan, alamat;
     int status;
-
+    
     public controllerUser() {
         mPegawai = new pegawai();
         login = new login();
@@ -46,9 +47,9 @@ public class controllerUser {
         login.setLocationRelativeTo(null);
         login.setResizable(false);
         login.loginListener(new loginListener());
-
+        
     }
-
+    
     public controllerUser(String nip, String nama) {
         pendataan = new Pendataan();
         mPegawai = new pegawai();
@@ -57,7 +58,7 @@ public class controllerUser {
         this.nama = nama;
         status = 1;
         pendataan.setNIP(nip);
-        pendataan.setNama(nama);
+        pendataan.setNama(mPegawai.getNama(nip));
         pendataan.setJabatan(mPegawai.getJabatan(nip));
         System.out.println("nip login " + nip);
         System.out.println("jabatan 2: " + mPegawai.getJabatan(nip));
@@ -65,12 +66,18 @@ public class controllerUser {
         pendataan.setLocationRelativeTo(null);
         pendataan.setResizable(false);
         pendataan.tabeljurnal(mPegawai.bacaJurnalNow(nip));
+        pendataan.resetListener(new resettabel());
         pendataan.cariListener(new caritanggalListener());
         pendataan.cariBulanListener(new caribulanListener());
+        pendataan.tahunListener(new caritahunListener());
         pendataan.tambahListener(new tambahjurnalListener());
         pendataan.laporanListener(new laporanListener());
+        DateTimeFormatter dtf = DateTimeFormatter.ofPattern("dd-MM-yyyy");
+        LocalDate localDate = LocalDate.now();
+        String tanggal = dtf.format(localDate);
+        pendataan.setTanggal(tanggal);
     }
-
+    
     public controllerUser(String nip, int a) {
         tambahjurnal = new tambahjurnal();
         mPegawai = new pegawai();
@@ -83,10 +90,13 @@ public class controllerUser {
         tambahjurnal.setNama(mPegawai.getNama(nip));
         tambahjurnal.setJabatan(mPegawai.getJabatan(nip));
         tambahjurnal.tambahListener(new simpanjurnalListener());
+        tambahjurnal.pendataan().setEnabled(false);
+        tambahjurnal.laporan().setEnabled(false);
+        tambahjurnal.kembaliListener(new kembali());
         tambahjurnal.setResizable(false);
         tambahjurnal.setLocationRelativeTo(null);
     }
-
+    
     public controllerUser(String nip, int a, int b) {
         laporan = new laporan();
         mPegawai = new pegawai();
@@ -99,12 +109,14 @@ public class controllerUser {
         laporan.setNIP(nip);
         laporan.setNama(mPegawai.getNama(nip));
         laporan.setJabatan(mPegawai.getJabatan(nip));
-        laporan.bulan(new caribulanListener());
-        laporan.tahun(new caritahunListener());
+        laporan.bulan(new caribulan2Listener());
         laporan.range(new carirangeListener());
         laporan.exportListener(new exportLaporan());
+        laporan.laporan().setEnabled(false);
+        laporan.pendataanListener(new laporankependataan());
+        laporan.tabeljurnal(mPegawai.bacaJurnal(nip));
     }
-
+    
     private void bacaByDate() {
         try {
             pendataan.tabeljurnal(mPegawai.bacaTabelJurnalTanggal(nip, pendataan.getTanggal()));
@@ -112,7 +124,7 @@ public class controllerUser {
             Logger.getLogger(controllerUser.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
-
+    
     private void bacaByMonth() {
         try {
             if (status == 1) {
@@ -124,12 +136,47 @@ public class controllerUser {
             Logger.getLogger(controllerUser.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
-
+    
+    private class resettabel implements ActionListener {
+        
+        public resettabel() {
+        }
+        
+        @Override
+        public void actionPerformed(ActionEvent e) {
+            pendataan.tabeljurnal(mPegawai.bacaJurnalNow(nip));
+        }
+    }
+    
+    private class laporankependataan implements ActionListener {
+        
+        public laporankependataan() {
+        }
+        
+        @Override
+        public void actionPerformed(ActionEvent e) {
+            laporan.dispose();
+            new controllerUser(nip, nama);
+        }
+    }
+    
+    private class kembali implements ActionListener {
+        
+        public kembali() {
+        }
+        
+        @Override
+        public void actionPerformed(ActionEvent e) {
+            tambahjurnal.dispose();
+            new controllerUser(nip, nama);
+        }
+    }
+    
     private class exportLaporan implements ActionListener {
-
+        
         public exportLaporan() {
         }
-
+        
         @Override
         public void actionPerformed(ActionEvent e) {
             String nama = laporan.getNama();
@@ -149,31 +196,34 @@ public class controllerUser {
             }
         }
     }
-
+    
     private class caritahunListener implements ActionListener {
-
+        
         public caritahunListener() {
         }
-
+        
         @Override
         public void actionPerformed(ActionEvent e) {
             try {
-                laporan.tabeljurnal(mPegawai.bacaTabelJurnalTahun(nip, laporan.getTanggal()));
+                pendataan.tabeljurnal(mPegawai.bacaTabelJurnalTahun(nip, pendataan.getTanggal()));
+                pendataan.tanggalButton().setEnabled(true);
+            pendataan.bulanButton().setEnabled(true);
+            pendataan.tahun().setEnabled(false);
             } catch (ParseException ex) {
                 Logger.getLogger(controllerUser.class.getName()).log(Level.SEVERE, null, ex);
             }
         }
     }
-
+    
     private class carirangeListener implements ActionListener {
-
+        
         public carirangeListener() {
         }
-
+        
         @Override
         public void actionPerformed(ActionEvent e) {
             try {
-                laporan.tabeljurnal(mPegawai.bacaTabelJurnalRange(nip,laporan.getTanggalAwal(),laporan.getTanggalAkhir()));
+                laporan.tabeljurnal(mPegawai.bacaTabelJurnalRange(nip, laporan.getTanggalAwal(), laporan.getTanggalAkhir()));
             } catch (ParseException ex) {
                 Logger.getLogger(controllerUser.class.getName()).log(Level.SEVERE, null, ex);
             }
@@ -181,59 +231,75 @@ public class controllerUser {
     }
     
     private class laporanListener implements ActionListener {
-
+        
         public laporanListener() {
         }
-
+        
         @Override
         public void actionPerformed(ActionEvent e) {
             pendataan.dispose();
             new controllerUser(nip, 1, 2);
         }
     }
-
+    
     private class tambahjurnalListener implements ActionListener {
-
+        
         public tambahjurnalListener() {
         }
-
+        
         @Override
         public void actionPerformed(ActionEvent e) {
             pendataan.dispose();
             new controllerUser(nip, 2);
         }
     }
-
+    
     private class caribulanListener implements ActionListener {
-
+        
         public caribulanListener() {
         }
-
+        
         @Override
         public void actionPerformed(ActionEvent e) {
             bacaByMonth();
+            pendataan.tanggalButton().setEnabled(true);
+            pendataan.bulanButton().setEnabled(false);
+            pendataan.tahun().setEnabled(true);
         }
     }
-
+     private class caribulan2Listener implements ActionListener {
+        
+        public caribulan2Listener() {
+        }
+        
+        @Override
+        public void actionPerformed(ActionEvent e) {
+            bacaByMonth();
+           
+        }
+    }
     private class caritanggalListener implements ActionListener {
-
+        
         public caritanggalListener() {
         }
-
+        
         @Override
         public void actionPerformed(ActionEvent e) {
             bacaByDate();
+            pendataan.tanggalButton().setEnabled(false);
+            pendataan.bulanButton().setEnabled(true);
+            pendataan.tahun().setEnabled(true);
         }
     }
-
+    
     private class simpanjurnalListener implements ActionListener {
-
+        
         public simpanjurnalListener() {
         }
-
+        
         @Override
         public void actionPerformed(ActionEvent e) {
-
+            
             String kegiatan = tambahjurnal.getKegiatan();
             if (kegiatan.equalsIgnoreCase("")) {
                 JOptionPane.showMessageDialog(login, "Kegiatan tidak boleh kosong");
@@ -243,18 +309,18 @@ public class controllerUser {
                 tambahjurnal.dispose();
                 new controllerUser(nip, nama);
             }
-
+            
         }
     }
-
+    
     private class loginListener implements ActionListener {
-
+        
         public loginListener() {
         }
-
+        
         @Override
         public void actionPerformed(ActionEvent e) {
-            nama = login.nama();
+            nama = login.getNama();
             nip = login.nip();
             System.out.println(nama);
             System.out.println("ini 1 " + nama);
@@ -267,9 +333,9 @@ public class controllerUser {
                 new controllerUser(nip, nama);
                 login.dispose();
                 JOptionPane.showMessageDialog(pendataan, "Selamat datang NIP " + nama);
-
+                
             }
         }
     }
-
+    
 }
