@@ -101,6 +101,48 @@ public class pegawai {
         }
         return id;
     }
+    
+      public String getPangkat(String nip) {
+        String query = "SELECT pangkat FROM pegawai WHERE nip=?";
+        System.out.println(query);
+        String id = "kosong";
+        try {
+            PreparedStatement st = koneksi.prepareStatement(query);
+            st.setString(1, nip);
+//            st.setString(2, password);
+            ResultSet rs = st.executeQuery();
+            while (rs.next()) {
+                id = rs.getString(1);
+                System.out.println(id);
+            }
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+            e.getMessage();
+        }
+        return id;
+    }
+    
+      public String getGolongan(String nip) {
+        String query = "SELECT pa.golruang FROM pegawai pe join pangkat pa on pe.pangkat=pa.pangkatgol  WHERE nip=?";
+        System.out.println(query);
+        String id = "kosong";
+        try {
+            PreparedStatement st = koneksi.prepareStatement(query);
+            st.setString(1, nip);
+//            st.setString(2, password);
+            ResultSet rs = st.executeQuery();
+            while (rs.next()) {
+                id = rs.getString(1);
+                System.out.println(id);
+            }
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+            e.getMessage();
+        }
+        return id;
+    }
 
     public String[][] getNamaLogin() {
         String query = "select nip,nama from pegawai";
@@ -441,4 +483,88 @@ public class pegawai {
         }
         return false;
     }
+
+     public boolean export2(String nip, String nama, String jabatan, Date tanggal1, Date tanggal2) throws FileNotFoundException, IOException, SQLException {
+        String query = "SELECT j.tanggal, p.nama,p.nip, j.kegiatan "
+                + "FROM pegawai p JOIN jurnal j on p.nip=j.pegawai where nip=? and tanggal between ? and ?";
+
+
+        try {
+            PreparedStatement st = koneksi.prepareStatement(query);
+            System.out.println(nip);
+            
+            DateFormat format1 = new SimpleDateFormat("yyyy-MM-dd");
+            java.util.Date date1 = tanggal1;
+            System.out.println(date1);
+            java.sql.Date sqlDate1 = new java.sql.Date(date1.getTime());
+            System.out.println(sqlDate1);
+
+            DateFormat format2 = new SimpleDateFormat("yyyy-MM-dd");
+            java.util.Date date2 = tanggal2;
+            System.out.println(date2);
+            java.sql.Date sqlDate2 = new java.sql.Date(date2.getTime());
+            
+            
+            st.setString(1, nip);
+            st.setDate(2, sqlDate1);
+            st.setDate(3, sqlDate2);
+            ResultSet rs = st.executeQuery();
+            HSSFWorkbook workbook = new HSSFWorkbook();
+            HSSFSheet sheet = workbook.createSheet("Laporan Kegiatan");
+            HSSFRow rowhead = sheet.createRow((short) 5);
+
+            CellStyle style = workbook.createCellStyle();
+            HSSFFont font = workbook.createFont();
+
+            font.setFontName(Short.toString(HSSFFont.BOLDWEIGHT_BOLD));
+            style.setVerticalAlignment(CellStyle.ALIGN_CENTER);
+            style.setFillForegroundColor(IndexedColors.AQUA.getIndex());
+            style.setFont(font);
+
+            rowhead.createCell((short) 0).setCellValue("Tanggal");
+            rowhead.createCell((short) 1).setCellValue("Kegiatan");
+
+            Row rowTotal = sheet.createRow(0);
+            Cell cellTextTotal = rowTotal.createCell(0);
+            cellTextTotal.setCellValue("NIP          : " + nip);
+            cellTextTotal.setCellStyle(style);
+
+            Row rowTotal2 = sheet.createRow(1);
+            Cell cellTextTotal2 = rowTotal2.createCell(0);
+            cellTextTotal2.setCellValue("Nama       :" + nama);
+
+            Row rowTotal3 = sheet.createRow(2);
+            Cell cellTextTotal3 = rowTotal3.createCell(0);
+            cellTextTotal3.setCellValue("Jabatan    :" + jabatan);
+
+            int i = 6;
+            String desa = null;
+            while (rs.next()) {
+                HSSFRow row = sheet.createRow((short) i);
+
+                row.createCell((short) 0).setCellValue(rs.getString("tanggal"));
+                row.createCell((short) 1).setCellValue(rs.getString("kegiatan"));
+
+                nip = rs.getString("nip");
+                i++;
+            }
+            DateTimeFormatter dtf = DateTimeFormatter.ofPattern("dd-MM-yyyy");
+            LocalDate localDate = LocalDate.now();
+            String yemi = System.getProperty("user.home") + "/Laporan Kinerja" + nip +  ".xls";
+            FileOutputStream fileOut = new FileOutputStream(yemi);
+            File file = new java.io.File(yemi);
+//            file.mkdirs();
+            file.getParentFile().mkdirs();
+            if (!file.exists()) {
+                file.createNewFile();
+            }
+            workbook.write(fileOut);
+            fileOut.close();
+        } catch (SQLException e) {
+            e.printStackTrace();
+
+        }
+        return false;
+    }
+
 }

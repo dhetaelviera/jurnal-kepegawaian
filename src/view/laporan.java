@@ -74,6 +74,10 @@ public class laporan extends javax.swing.JFrame {
     public void exportListener (ActionListener a){
         export.addActionListener(a);
     }
+ 
+    public void export2Listener (ActionListener a){
+        export2.addActionListener(a);
+    }
     
     public void pendataanListener(ActionListener a){
         pendataan.addActionListener(a);
@@ -97,6 +101,9 @@ public class laporan extends javax.swing.JFrame {
     
     public JButton export(){
         return export;
+    }
+    public JButton export2(){
+        return export2;
     }
 
     public JLabel nama() {
@@ -134,6 +141,10 @@ public class laporan extends javax.swing.JFrame {
     public void setPangkat(String a) {
         this.pangkat.setText(a);
     }
+  
+    public void setGol(String a) {
+        this.golruang.setText(a);
+    }
 
     /**
      * This method is called from within the constructor to initialize the form.
@@ -150,14 +161,6 @@ public class laporan extends javax.swing.JFrame {
         jurnal = new javax.swing.JTable();
         export = new javax.swing.JButton();
         range = new javax.swing.JButton();
-        jLabel8 = new javax.swing.JLabel();
-        nama = new javax.swing.JLabel();
-        jLabel5 = new javax.swing.JLabel();
-        nip = new javax.swing.JLabel();
-        jLabel6 = new javax.swing.JLabel();
-        jabatan = new javax.swing.JLabel();
-        pangkat = new javax.swing.JLabel();
-        jLabel7 = new javax.swing.JLabel();
         jLabel2 = new javax.swing.JLabel();
         calendar = new org.jdesktop.swingx.JXDatePicker();
         bulan = new javax.swing.JButton();
@@ -165,6 +168,17 @@ public class laporan extends javax.swing.JFrame {
         calendar2 = new org.jdesktop.swingx.JXDatePicker();
         jLabel3 = new javax.swing.JLabel();
         jLabel4 = new javax.swing.JLabel();
+        jLabel5 = new javax.swing.JLabel();
+        nip = new javax.swing.JLabel();
+        jLabel8 = new javax.swing.JLabel();
+        nama = new javax.swing.JLabel();
+        jLabel6 = new javax.swing.JLabel();
+        jabatan = new javax.swing.JLabel();
+        jLabel9 = new javax.swing.JLabel();
+        pangkat = new javax.swing.JLabel();
+        golruang = new javax.swing.JLabel();
+        jLabel7 = new javax.swing.JLabel();
+        export2 = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         getContentPane().setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
@@ -196,32 +210,16 @@ public class laporan extends javax.swing.JFrame {
         });
         jScrollPane1.setViewportView(jurnal);
 
-        getContentPane().add(jScrollPane1, new org.netbeans.lib.awtextra.AbsoluteConstraints(42, 257, 530, 200));
+        getContentPane().add(jScrollPane1, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 390, 530, 160));
 
         export.setText("export ke excel");
-        getContentPane().add(export, new org.netbeans.lib.awtextra.AbsoluteConstraints(360, 200, 120, 20));
+        getContentPane().add(export, new org.netbeans.lib.awtextra.AbsoluteConstraints(310, 230, 120, 20));
 
         range.setText("cari");
-        getContentPane().add(range, new org.netbeans.lib.awtextra.AbsoluteConstraints(470, 230, -1, -1));
+        getContentPane().add(range, new org.netbeans.lib.awtextra.AbsoluteConstraints(440, 330, -1, -1));
 
-        jLabel8.setText("Nama:");
-        getContentPane().add(jLabel8, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 70, -1, -1));
-        getContentPane().add(nama, new org.netbeans.lib.awtextra.AbsoluteConstraints(70, 70, 160, 20));
-
-        jLabel5.setText("NIP:");
-        getContentPane().add(jLabel5, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 110, -1, -1));
-        getContentPane().add(nip, new org.netbeans.lib.awtextra.AbsoluteConstraints(80, 110, 160, 20));
-
-        jLabel6.setText("Jabatan:");
-        getContentPane().add(jLabel6, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 140, -1, -1));
-        getContentPane().add(jabatan, new org.netbeans.lib.awtextra.AbsoluteConstraints(90, 140, 160, 20));
-        getContentPane().add(pangkat, new org.netbeans.lib.awtextra.AbsoluteConstraints(80, 170, 160, 20));
-
-        jLabel7.setText("Pangkat:");
-        getContentPane().add(jLabel7, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 170, -1, -1));
-
-        jLabel2.setText("Tanggal:");
-        getContentPane().add(jLabel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(250, 230, -1, -1));
+        jLabel2.setText("Cari berdasarkan rentang waktu");
+        getContentPane().add(jLabel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 300, -1, -1));
 
         calendar.setBackground(new java.awt.Color(255, 75, 109));
         calendar.setForeground(new java.awt.Color(255, 255, 255));
@@ -230,10 +228,10 @@ public class laporan extends javax.swing.JFrame {
                 calendarActionPerformed(evt);
             }
         });
-        getContentPane().add(calendar, new org.netbeans.lib.awtextra.AbsoluteConstraints(80, 200, 160, -1));
+        getContentPane().add(calendar, new org.netbeans.lib.awtextra.AbsoluteConstraints(80, 230, 160, -1));
 
-        bulan.setText("cari bulan");
-        getContentPane().add(bulan, new org.netbeans.lib.awtextra.AbsoluteConstraints(270, 200, -1, -1));
+        bulan.setText("cari");
+        getContentPane().add(bulan, new org.netbeans.lib.awtextra.AbsoluteConstraints(250, 230, -1, -1));
 
         calendar1.setBackground(new java.awt.Color(255, 75, 109));
         calendar1.setForeground(new java.awt.Color(255, 255, 255));
@@ -242,7 +240,7 @@ public class laporan extends javax.swing.JFrame {
                 calendar1ActionPerformed(evt);
             }
         });
-        getContentPane().add(calendar1, new org.netbeans.lib.awtextra.AbsoluteConstraints(80, 230, 160, -1));
+        getContentPane().add(calendar1, new org.netbeans.lib.awtextra.AbsoluteConstraints(80, 330, 160, -1));
 
         calendar2.setBackground(new java.awt.Color(255, 75, 109));
         calendar2.setForeground(new java.awt.Color(255, 255, 255));
@@ -251,13 +249,36 @@ public class laporan extends javax.swing.JFrame {
                 calendar2ActionPerformed(evt);
             }
         });
-        getContentPane().add(calendar2, new org.netbeans.lib.awtextra.AbsoluteConstraints(300, 230, 160, -1));
+        getContentPane().add(calendar2, new org.netbeans.lib.awtextra.AbsoluteConstraints(270, 330, 160, -1));
 
         jLabel3.setText("Tanggal:");
-        getContentPane().add(jLabel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 200, -1, -1));
+        getContentPane().add(jLabel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 230, -1, -1));
 
         jLabel4.setText("Tanggal:");
-        getContentPane().add(jLabel4, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 230, -1, -1));
+        getContentPane().add(jLabel4, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 330, -1, -1));
+
+        jLabel5.setText("NIP:");
+        getContentPane().add(jLabel5, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 70, -1, -1));
+        getContentPane().add(nip, new org.netbeans.lib.awtextra.AbsoluteConstraints(60, 70, 160, 20));
+
+        jLabel8.setText("Nama:");
+        getContentPane().add(jLabel8, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 100, -1, -1));
+        getContentPane().add(nama, new org.netbeans.lib.awtextra.AbsoluteConstraints(70, 100, 160, 20));
+
+        jLabel6.setText("Jabatan:");
+        getContentPane().add(jLabel6, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 130, -1, -1));
+        getContentPane().add(jabatan, new org.netbeans.lib.awtextra.AbsoluteConstraints(70, 130, 380, 20));
+
+        jLabel9.setText("Pangkat:");
+        getContentPane().add(jLabel9, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 160, -1, -1));
+        getContentPane().add(pangkat, new org.netbeans.lib.awtextra.AbsoluteConstraints(80, 160, 100, 20));
+        getContentPane().add(golruang, new org.netbeans.lib.awtextra.AbsoluteConstraints(170, 160, 90, 20));
+
+        jLabel7.setText("Cari berdasarkan bulan:");
+        getContentPane().add(jLabel7, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 200, -1, -1));
+
+        export2.setText("export ke excel");
+        getContentPane().add(export2, new org.netbeans.lib.awtextra.AbsoluteConstraints(500, 330, -1, -1));
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
@@ -315,6 +336,8 @@ public class laporan extends javax.swing.JFrame {
     private org.jdesktop.swingx.JXDatePicker calendar1;
     private org.jdesktop.swingx.JXDatePicker calendar2;
     private javax.swing.JButton export;
+    private javax.swing.JButton export2;
+    private javax.swing.JLabel golruang;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
@@ -322,6 +345,7 @@ public class laporan extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel6;
     private javax.swing.JLabel jLabel7;
     private javax.swing.JLabel jLabel8;
+    private javax.swing.JLabel jLabel9;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JLabel jabatan;
     private javax.swing.JTable jurnal;

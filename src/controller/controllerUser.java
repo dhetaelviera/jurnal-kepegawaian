@@ -37,7 +37,7 @@ public class controllerUser {
     private Pendataan pendataan;
     private laporan laporan;
     private tambahjurnal tambahjurnal;
-    String nip, nama, jabatan, alamat;
+    String nip, nama, jabatan, pangkat;
     int status;
     
     public controllerUser() {
@@ -60,6 +60,8 @@ public class controllerUser {
         pendataan.setNIP(nip);
         pendataan.setNama(mPegawai.getNama(nip));
         pendataan.setJabatan(mPegawai.getJabatan(nip));
+        pendataan.setPangkat(mPegawai.getPangkat(nip));
+        pendataan.setGol(mPegawai.getGolongan(nip));
         System.out.println("nip login " + nip);
         System.out.println("jabatan 2: " + mPegawai.getJabatan(nip));
         pendataan.pendataan().setEnabled(false);
@@ -97,17 +99,21 @@ public class controllerUser {
         tambahjurnal.setLocationRelativeTo(null);
     }
     
-    public controllerUser(String nip, int a, int b) {
+    public controllerUser(String nip, int a, int b, String nama) {
         laporan = new laporan();
         mPegawai = new pegawai();
         laporan.setVisible(true);
         System.out.println("di sini + " + nip);
         this.nip = nip;
+        this.nama=nama;
         status = 2;
         laporan.setResizable(false);
         laporan.setLocationRelativeTo(null);
         laporan.setNIP(nip);
-        laporan.setNama(mPegawai.getNama(nip));
+        laporan.setNama(nama);
+        laporan.setJabatan(mPegawai.getJabatan(nip));
+        laporan.setPangkat(mPegawai.getPangkat(nip));
+        laporan.setGol(mPegawai.getGolongan(nip));
         laporan.setJabatan(mPegawai.getJabatan(nip));
         laporan.bulan(new caribulan2Listener());
         laporan.range(new carirangeListener());
@@ -115,6 +121,10 @@ public class controllerUser {
         laporan.laporan().setEnabled(false);
         laporan.pendataanListener(new laporankependataan());
         laporan.tabeljurnal(mPegawai.bacaJurnal(nip));
+        laporan.export2Listener(new exportRange());
+        laporan.export().setEnabled(false);
+        laporan.export2().setEnabled(false);
+
     }
     
     private void bacaByDate() {
@@ -136,7 +146,8 @@ public class controllerUser {
             Logger.getLogger(controllerUser.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
-    
+
+   
     private class resettabel implements ActionListener {
         
         public resettabel() {
@@ -145,6 +156,9 @@ public class controllerUser {
         @Override
         public void actionPerformed(ActionEvent e) {
             pendataan.tabeljurnal(mPegawai.bacaJurnalNow(nip));
+            pendataan.tahun().setEnabled(true);
+            pendataan.bulanButton().setEnabled(true);
+            pendataan.tanggalButton().setEnabled(true);
         }
     }
     
@@ -197,6 +211,29 @@ public class controllerUser {
         }
     }
     
+     private class exportRange implements ActionListener {
+
+        public exportRange() {
+        }
+
+        @Override
+        public void actionPerformed(ActionEvent e) {
+         String nama = laporan.getNama();
+            String jabatan = laporan.getJabatan();
+            Date tanggal1 = laporan.getTanggalAwal();
+            Date tanggal2=laporan.getTanggalAkhir(); 
+            try {
+                mPegawai.export2(nip, nama, jabatan, tanggal1,tanggal2);
+                JOptionPane.showMessageDialog(laporan, "Laporan Kinerja berhasil di eksport\n" + System.getProperty("user.home") + "/Downloads/bapenda/");
+            } catch (IOException ex) {
+                Logger.getLogger(controllerUser.class.getName()).log(Level.SEVERE, null, ex);
+            } catch (SQLException ex) {
+                Logger.getLogger(controllerUser.class.getName()).log(Level.SEVERE, null, ex);
+            }
+        }
+    }
+    
+    
     private class caritahunListener implements ActionListener {
         
         public caritahunListener() {
@@ -222,6 +259,8 @@ public class controllerUser {
         
         @Override
         public void actionPerformed(ActionEvent e) {
+            laporan.export().setEnabled(false);
+            laporan.export2().setEnabled(true);
             try {
                 laporan.tabeljurnal(mPegawai.bacaTabelJurnalRange(nip, laporan.getTanggalAwal(), laporan.getTanggalAkhir()));
             } catch (ParseException ex) {
@@ -238,7 +277,7 @@ public class controllerUser {
         @Override
         public void actionPerformed(ActionEvent e) {
             pendataan.dispose();
-            new controllerUser(nip, 1, 2);
+            new controllerUser(nip, 1, 2,nama);
         }
     }
     
@@ -275,7 +314,8 @@ public class controllerUser {
         @Override
         public void actionPerformed(ActionEvent e) {
             bacaByMonth();
-           
+           laporan.export2().setEnabled(false);
+           laporan.export().setEnabled(true);
         }
     }
     private class caritanggalListener implements ActionListener {
@@ -323,12 +363,15 @@ public class controllerUser {
             nama = login.getNama();
             nip = login.nip();
             System.out.println(nama);
+            pangkat=mPegawai.getPangkat(nip);
+            System.out.println(pangkat + "ini pangkat");
             System.out.println("ini 1 " + nama);
             if (nama.equalsIgnoreCase("") || nip.equalsIgnoreCase("")) {
                 JOptionPane.showMessageDialog(login, "Nama atau NIP tidak boleh kosong");
             } else {
                 int level = mPegawai.login(nama, nip);
-                String jabatan1 = mPegawai.getJabatan(nip);
+                String jabatan1 = mPegawai.getJabatan(login.nip());
+                System.out.println("jabatannya adalah= "+jabatan1);
                 System.out.println(nip);
                 new controllerUser(nip, nama);
                 login.dispose();

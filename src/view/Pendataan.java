@@ -131,6 +131,10 @@ public class Pendataan extends javax.swing.JFrame {
     public void setPangkat(String a) {
         this.pangkat.setText(a);
     }
+    
+    public void setGol(String a) {
+        this.golruang.setText(a);
+    }
 
     /**
      * This method is called from within the constructor to initialize the form.
@@ -161,6 +165,8 @@ public class Pendataan extends javax.swing.JFrame {
         tahun = new javax.swing.JButton();
         reset = new javax.swing.JButton();
         tanggalnow = new javax.swing.JLabel();
+        golruang = new javax.swing.JLabel();
+        jLabel9 = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setPreferredSize(new java.awt.Dimension(600, 500));
@@ -187,19 +193,19 @@ public class Pendataan extends javax.swing.JFrame {
         });
         jScrollPane1.setViewportView(jurnal);
 
-        getContentPane().add(jScrollPane1, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 230, 460, 230));
+        getContentPane().add(jScrollPane1, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 300, 460, 160));
 
         tambahJurnal.setText("tambah jurnal");
-        getContentPane().add(tambahJurnal, new org.netbeans.lib.awtextra.AbsoluteConstraints(490, 240, -1, -1));
+        getContentPane().add(tambahJurnal, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 260, -1, -1));
 
         jLabel2.setText("Tanggal:");
-        getContentPane().add(jLabel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 200, -1, -1));
+        getContentPane().add(jLabel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 210, -1, -1));
 
-        cariBulan.setText("cari bulan");
-        getContentPane().add(cariBulan, new org.netbeans.lib.awtextra.AbsoluteConstraints(360, 200, -1, -1));
+        cariBulan.setText("bulan");
+        getContentPane().add(cariBulan, new org.netbeans.lib.awtextra.AbsoluteConstraints(250, 240, 70, -1));
 
-        cari.setText("cari tanggal");
-        getContentPane().add(cari, new org.netbeans.lib.awtextra.AbsoluteConstraints(250, 200, -1, -1));
+        cari.setText("tanggal");
+        getContentPane().add(cari, new org.netbeans.lib.awtextra.AbsoluteConstraints(250, 210, -1, -1));
 
         calendar.setBackground(new java.awt.Color(255, 75, 109));
         calendar.setForeground(new java.awt.Color(255, 255, 255));
@@ -208,23 +214,23 @@ public class Pendataan extends javax.swing.JFrame {
                 calendarActionPerformed(evt);
             }
         });
-        getContentPane().add(calendar, new org.netbeans.lib.awtextra.AbsoluteConstraints(80, 200, 160, -1));
-        getContentPane().add(pangkat, new org.netbeans.lib.awtextra.AbsoluteConstraints(90, 170, 160, 20));
-        getContentPane().add(jabatan, new org.netbeans.lib.awtextra.AbsoluteConstraints(90, 140, 160, 20));
-        getContentPane().add(nip, new org.netbeans.lib.awtextra.AbsoluteConstraints(80, 110, 160, 20));
-        getContentPane().add(nama, new org.netbeans.lib.awtextra.AbsoluteConstraints(80, 70, 160, 20));
+        getContentPane().add(calendar, new org.netbeans.lib.awtextra.AbsoluteConstraints(80, 210, 160, -1));
+        getContentPane().add(pangkat, new org.netbeans.lib.awtextra.AbsoluteConstraints(80, 180, 100, 20));
+        getContentPane().add(jabatan, new org.netbeans.lib.awtextra.AbsoluteConstraints(80, 150, 270, 20));
+        getContentPane().add(nip, new org.netbeans.lib.awtextra.AbsoluteConstraints(70, 90, 160, 20));
+        getContentPane().add(nama, new org.netbeans.lib.awtextra.AbsoluteConstraints(80, 120, 160, 20));
 
         jLabel5.setText("NIP:");
-        getContentPane().add(jLabel5, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 110, -1, -1));
+        getContentPane().add(jLabel5, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 90, -1, -1));
 
         jLabel6.setText("Jabatan:");
-        getContentPane().add(jLabel6, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 140, -1, -1));
+        getContentPane().add(jLabel6, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 150, -1, -1));
 
-        jLabel7.setText("Pangkat:");
-        getContentPane().add(jLabel7, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 170, -1, -1));
+        jLabel7.setText("Cari berdasarkan:");
+        getContentPane().add(jLabel7, new org.netbeans.lib.awtextra.AbsoluteConstraints(250, 190, -1, -1));
 
         jLabel8.setText("Nama:");
-        getContentPane().add(jLabel8, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 70, -1, -1));
+        getContentPane().add(jLabel8, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 120, -1, -1));
 
         laporan.setText("Laporan");
         getContentPane().add(laporan, new org.netbeans.lib.awtextra.AbsoluteConstraints(130, 20, -1, -1));
@@ -232,12 +238,16 @@ public class Pendataan extends javax.swing.JFrame {
         pendataan.setText("Pendataan");
         getContentPane().add(pendataan, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 20, -1, -1));
 
-        tahun.setText("cari tahun");
-        getContentPane().add(tahun, new org.netbeans.lib.awtextra.AbsoluteConstraints(450, 200, -1, -1));
+        tahun.setText("tahun");
+        getContentPane().add(tahun, new org.netbeans.lib.awtextra.AbsoluteConstraints(330, 210, -1, -1));
 
         reset.setText("reset tabel");
-        getContentPane().add(reset, new org.netbeans.lib.awtextra.AbsoluteConstraints(490, 290, -1, -1));
-        getContentPane().add(tanggalnow, new org.netbeans.lib.awtextra.AbsoluteConstraints(390, 20, 160, 20));
+        getContentPane().add(reset, new org.netbeans.lib.awtextra.AbsoluteConstraints(140, 260, -1, -1));
+        getContentPane().add(tanggalnow, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 50, 160, 20));
+        getContentPane().add(golruang, new org.netbeans.lib.awtextra.AbsoluteConstraints(170, 180, 90, 20));
+
+        jLabel9.setText("Pangkat:");
+        getContentPane().add(jLabel9, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 180, -1, -1));
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
@@ -286,11 +296,13 @@ public class Pendataan extends javax.swing.JFrame {
     private org.jdesktop.swingx.JXDatePicker calendar;
     private javax.swing.JButton cari;
     private javax.swing.JButton cariBulan;
+    private javax.swing.JLabel golruang;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel5;
     private javax.swing.JLabel jLabel6;
     private javax.swing.JLabel jLabel7;
     private javax.swing.JLabel jLabel8;
+    private javax.swing.JLabel jLabel9;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JLabel jabatan;
     private javax.swing.JTable jurnal;
