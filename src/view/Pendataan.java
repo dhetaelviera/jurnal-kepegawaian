@@ -42,10 +42,10 @@ public class Pendataan extends javax.swing.JFrame {
         Date tanggal = (calendar.getDate());
         return tanggal;
     }
-    
-    public void setTanggal(String tanggal){
-        
-            this.tanggalnow.setText(tanggal);
+
+    public void setTanggal(String tanggal) {
+
+        this.tanggalnow.setText(tanggal);
     }
 
     public void tambahListener(ActionListener a) {
@@ -59,32 +59,32 @@ public class Pendataan extends javax.swing.JFrame {
     public void cariBulanListener(ActionListener a) {
         cariBulan.addActionListener(a);
     }
-    
-    public void laporanListener(ActionListener a){
+
+    public void laporanListener(ActionListener a) {
         laporan.addActionListener(a);
     }
-    
-    public void tahunListener(ActionListener a){
+
+    public void tahunListener(ActionListener a) {
         tahun.addActionListener(a);
     }
-    
-    public void resetListener(ActionListener a){
+
+    public void resetListener(ActionListener a) {
         reset.addActionListener(a);
     }
 
     public JButton tanggalButton() {
         return cari;
     }
-    
-    public JButton reset(){
+
+    public JButton reset() {
         return reset;
     }
 
     public JButton bulanButton() {
         return cariBulan;
     }
-    
-    public JButton tahun(){
+
+    public JButton tahun() {
         return tahun;
     }
 
@@ -131,7 +131,7 @@ public class Pendataan extends javax.swing.JFrame {
     public void setPangkat(String a) {
         this.pangkat.setText(a);
     }
-    
+
     public void setGol(String a) {
         this.golruang.setText(a);
     }

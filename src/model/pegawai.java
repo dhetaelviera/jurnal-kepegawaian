@@ -166,6 +166,52 @@ public class pegawai {
         }
         return jenis;
     }
+    
+    public String[][] getKeterangan() {
+        String query = "select idketerangan,keterangan from keterangan";
+        String jenis[][] = null;
+
+        try {
+            PreparedStatement st = koneksi.prepareStatement(query, ResultSet.TYPE_SCROLL_INSENSITIVE, ResultSet.CONCUR_UPDATABLE);
+            ResultSet rs = st.executeQuery();
+            rs.last();
+            jenis = new String[2][rs.getRow()];
+            rs.beforeFirst();
+            int i = 0;
+            while (rs.next()) {
+                jenis[0][i] = rs.getString("idketerangan");
+                jenis[1][i] = rs.getString("keterangan");
+                i++;
+            }
+        } catch (SQLException ex) {
+            ex.printStackTrace();
+            ex.getMessage();
+        }
+        return jenis;
+    }
+    
+     public String[][] getObyekPajak() {
+        String query = "select idObyek,obyekpajak from obyekpajak";
+        String jenis[][] = null;
+
+        try {
+            PreparedStatement st = koneksi.prepareStatement(query, ResultSet.TYPE_SCROLL_INSENSITIVE, ResultSet.CONCUR_UPDATABLE);
+            ResultSet rs = st.executeQuery();
+            rs.last();
+            jenis = new String[2][rs.getRow()];
+            rs.beforeFirst();
+            int i = 0;
+            while (rs.next()) {
+                jenis[0][i] = rs.getString("idobyek");
+                jenis[1][i] = rs.getString("obyekpajak");
+                i++;
+            }
+        } catch (SQLException ex) {
+            ex.printStackTrace();
+            ex.getMessage();
+        }
+        return jenis;
+    }
 
     public String getNIP(String nip) {
         String query = "SELECT nip FROM pegawai WHERE nip=?";
@@ -395,13 +441,17 @@ public class pegawai {
         return tabel;
     }
 
-    public boolean tambahJurnal(String nip, String kegiatan) {
-        String query = "insert into `jurnal` (`tanggal`,`pegawai`,`kegiatan`)VALUES(CURRENT_DATE,?,?)";
+    public boolean tambahJurnal(String nip, String kegiatan, String nama, String alamat, int obyekPajak, int keterangan) {
+        String query = "insert into `jurnal` (`tanggal`,`pegawai`,`kegiatan`,`namaWajibPajak`, `alamat`, `obyekPajak`, `keterangan`)VALUES(CURRENT_DATE,?,?,?,?,?,?)";
         System.out.println(query);
         try {
             PreparedStatement st = koneksi.prepareStatement(query);
             st.setString(1, nip);
             st.setString(2, kegiatan);
+            st.setString(3, nama);
+            st.setString(4, alamat);
+            st.setInt(5, obyekPajak);
+            st.setInt(6, keterangan);
             int status = st.executeUpdate();
             if (status > 0) {
                 return true;

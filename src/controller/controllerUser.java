@@ -86,11 +86,10 @@ public class controllerUser {
         tambahjurnal.setVisible(true);
         System.out.println("di sini + " + nip);
         this.nip = nip;
-        tambahjurnal.setTanggal();
-        tambahjurnal.setNIP(nip);
-        tambahjurnal.setJabatan(mPegawai.getJabatan(nip));
-        tambahjurnal.setNama(mPegawai.getNama(nip));
-        tambahjurnal.setJabatan(mPegawai.getJabatan(nip));
+       DateTimeFormatter dtf = DateTimeFormatter.ofPattern("dd-MM-yyyy");
+        LocalDate localDate = LocalDate.now();
+        String tanggal = dtf.format(localDate);
+        tambahjurnal.setTanggal(tanggal);
         tambahjurnal.tambahListener(new simpanjurnalListener());
         tambahjurnal.pendataan().setEnabled(false);
         tambahjurnal.laporan().setEnabled(false);
@@ -110,7 +109,7 @@ public class controllerUser {
         laporan.setResizable(false);
         laporan.setLocationRelativeTo(null);
         laporan.setNIP(nip);
-        laporan.setNama(nama);
+        laporan.setNama(mPegawai.getNama(nip));
         laporan.setJabatan(mPegawai.getJabatan(nip));
         laporan.setPangkat(mPegawai.getPangkat(nip));
         laporan.setGol(mPegawai.getGolongan(nip));
@@ -181,8 +180,15 @@ public class controllerUser {
         
         @Override
         public void actionPerformed(ActionEvent e) {
+            String text=tambahjurnal.getKegiatan();
+             int pilihan = JOptionPane.showConfirmDialog(tambahjurnal, "Kembali ke beranda? ", " Konfirmasi", JOptionPane.YES_NO_OPTION);
+           if(pilihan==JOptionPane.YES_OPTION&&text!=null){
+                JOptionPane.showMessageDialog(tambahjurnal, "Data tidak tersimpan.");
             tambahjurnal.dispose();
             new controllerUser(nip, nama);
+                
+            }
+            
         }
     }
     
@@ -194,6 +200,7 @@ public class controllerUser {
         @Override
         public void actionPerformed(ActionEvent e) {
             String nama = laporan.getNama();
+            System.out.println("namanya= "+nama);
             String jabatan = laporan.getJabatan();
             Date tanggal = laporan.getTanggal();
             DateFormat dtf = new SimpleDateFormat("dd MM yyyy");
@@ -243,9 +250,7 @@ public class controllerUser {
         public void actionPerformed(ActionEvent e) {
             try {
                 pendataan.tabeljurnal(mPegawai.bacaTabelJurnalTahun(nip, pendataan.getTanggal()));
-                pendataan.tanggalButton().setEnabled(true);
-            pendataan.bulanButton().setEnabled(true);
-            pendataan.tahun().setEnabled(false);
+              
             } catch (ParseException ex) {
                 Logger.getLogger(controllerUser.class.getName()).log(Level.SEVERE, null, ex);
             }
@@ -301,9 +306,7 @@ public class controllerUser {
         @Override
         public void actionPerformed(ActionEvent e) {
             bacaByMonth();
-            pendataan.tanggalButton().setEnabled(true);
-            pendataan.bulanButton().setEnabled(false);
-            pendataan.tahun().setEnabled(true);
+           
         }
     }
      private class caribulan2Listener implements ActionListener {
@@ -326,9 +329,7 @@ public class controllerUser {
         @Override
         public void actionPerformed(ActionEvent e) {
             bacaByDate();
-            pendataan.tanggalButton().setEnabled(false);
-            pendataan.bulanButton().setEnabled(true);
-            pendataan.tahun().setEnabled(true);
+             
         }
     }
     
@@ -341,10 +342,14 @@ public class controllerUser {
         public void actionPerformed(ActionEvent e) {
             
             String kegiatan = tambahjurnal.getKegiatan();
+            String lokasi=tambahjurnal.getLokasi();
+            int ket=Integer.valueOf(tambahjurnal.getKet());
+            int obyek=Integer.valueOf(tambahjurnal.getObyek());
+            String namanya=tambahjurnal.getNamanya();
             if (kegiatan.equalsIgnoreCase("")) {
                 JOptionPane.showMessageDialog(login, "Kegiatan tidak boleh kosong");
             } else {
-                boolean test = mPegawai.tambahJurnal(nip, kegiatan);
+                boolean test = mPegawai.tambahJurnal(nip, kegiatan,namanya, lokasi, obyek, ket);
                 JOptionPane.showMessageDialog(login, "Jurnal hari ini berhasil ditambahkan");
                 tambahjurnal.dispose();
                 new controllerUser(nip, nama);
