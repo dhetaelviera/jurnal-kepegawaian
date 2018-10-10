@@ -101,8 +101,8 @@ public class pegawai {
         }
         return id;
     }
-    
-      public String getPangkat(String nip) {
+
+    public String getPangkat(String nip) {
         String query = "SELECT pangkat FROM pegawai WHERE nip=?";
         System.out.println(query);
         String id = "kosong";
@@ -122,8 +122,8 @@ public class pegawai {
         }
         return id;
     }
-    
-      public String getGolongan(String nip) {
+
+    public String getGolongan(String nip) {
         String query = "SELECT pa.golruang FROM pegawai pe join pangkat pa on pe.pangkat=pa.pangkatgol  WHERE nip=?";
         System.out.println(query);
         String id = "kosong";
@@ -166,7 +166,7 @@ public class pegawai {
         }
         return jenis;
     }
-    
+
     public String[][] getKeterangan() {
         String query = "select idketerangan,keterangan from keterangan";
         String jenis[][] = null;
@@ -189,8 +189,8 @@ public class pegawai {
         }
         return jenis;
     }
-    
-     public String[][] getObyekPajak() {
+
+    public String[][] getObyekPajak() {
         String query = "select idObyek,obyekpajak from obyekpajak";
         String jenis[][] = null;
 
@@ -254,18 +254,22 @@ public class pegawai {
     }
 
     public DefaultTableModel bacaJurnal(String nip) {
-        String query = "select j.tanggal, p.nama, j.kegiatan from jurnal j join pegawai p on p.nip=j.pegawai where nip =? ";
-        String namaKolom[] = {"Tanggal", "Nama", "Kegiatan"};
+        String query = "select j.tanggal, j.namaWajibPajak, j.alamat, o.obyekPajak,  d.kegiatan, k.keterangan from jurnal j join obyekpajak o on j.obyekpajak=o.idobyek"
+                + " join detail d on d.idjurnal=j.idjurnal join keterangan k on k.idketerangan=d.keterangan where j.pegawai =? ";
+        String namaKolom[] = {"Tanggal", "Nama Wajib Pajak", "Alamat", "Obyek Pajak", "Hasil Pendataan", "Keterangan"};
         DefaultTableModel tabel = new DefaultTableModel(null, namaKolom);
         try {
             PreparedStatement st = koneksi.prepareStatement(query);
             st.setString(1, nip);
             ResultSet rs = st.executeQuery();
             while (rs.next()) {
-                Object data[] = new Object[3];
+                Object data[] = new Object[6];
                 data[0] = rs.getString(1);
                 data[1] = rs.getString(2);
                 data[2] = rs.getString(3);
+                data[3] = rs.getString(4);
+                data[4] = rs.getString(5);
+                data[5] = rs.getString(6);
                 tabel.addRow(data);
             }
 
@@ -277,18 +281,50 @@ public class pegawai {
     }
 
     public DefaultTableModel bacaJurnalNow(String nip) {
-        String query = "select j.tanggal, p.nama, j.kegiatan from jurnal j join pegawai p on p.nip=j.pegawai where nip =? and tanggal=current_date ";
-        String namaKolom[] = {"Tanggal", "Nama", "Kegiatan"};
+        String query = "select j.tanggal, j.namaWajibPajak, j.alamat, o.obyekPajak,  d.kegiatan, k.keterangan from jurnal j join obyekpajak o on j.obyekpajak=o.idobyek"
+                + " join detail d on d.idjurnal=j.idjurnal join keterangan k on k.idketerangan=d.keterangan where j.pegawai =? and j.tanggal=current_date ";
+        String namaKolom[] = {"Tanggal", "Nama Wajib Pajak", "Alamat", "Obyek Pajak", "Hasil Pendataan", "Keterangan"};
         DefaultTableModel tabel = new DefaultTableModel(null, namaKolom);
         try {
             PreparedStatement st = koneksi.prepareStatement(query);
             st.setString(1, nip);
             ResultSet rs = st.executeQuery();
             while (rs.next()) {
-                Object data[] = new Object[3];
+                Object data[] = new Object[6];
                 data[0] = rs.getString(1);
                 data[1] = rs.getString(2);
                 data[2] = rs.getString(3);
+                data[3] = rs.getString(4);
+                data[4] = rs.getString(5);
+                data[5] = rs.getString(6);
+                tabel.addRow(data);
+            }
+
+        } catch (SQLException e) {
+            e.getMessage();
+            e.printStackTrace();
+        }
+        return tabel;
+    }
+
+    public DefaultTableModel bacaJurnalNowSatuLokasi(String nip, String nama) {
+        String query = "select j.namaWajibPajak, j.alamat, o.obyekPajak,  d.kegiatan, k.keterangan from jurnal j join obyekpajak o on j.obyekpajak=o.idobyek"
+                + " join detail d on d.idjurnal=j.idjurnal join keterangan k on k.idketerangan=d.keterangan where j.pegawai =? and j.namaWajibPajak=? and j.tanggal=current_date ";
+        String namaKolom[] = {"Nama Wajib Pajak", "Alamat", "Obyek Pajak", "Hasil Pendataan", "Keterangan"};
+        DefaultTableModel tabel = new DefaultTableModel(null, namaKolom);
+        try {
+            PreparedStatement st = koneksi.prepareStatement(query);
+            st.setString(1, nip);
+            st.setString(2, nama);
+            ResultSet rs = st.executeQuery();
+            while (rs.next()) {
+                Object data[] = new Object[5];
+                data[0] = rs.getString(1);
+                data[1] = rs.getString(2);
+                data[2] = rs.getString(3);
+                data[3] = rs.getString(4);
+                data[4] = rs.getString(5);
+
                 tabel.addRow(data);
             }
 
@@ -300,9 +336,9 @@ public class pegawai {
     }
 
     public DefaultTableModel bacaTabelJurnalTanggal(String nip, Date tanggal) throws ParseException {
-        String query = "SELECT j.tanggal, p.nama, j.kegiatan"
-                + "  FROM pegawai p join jurnal j on p.nip=j.pegawai WHERE p.nip=? and j.tanggal=? ORDER BY j.tanggal desc;";
-        String namaKolom[] = {"Tangga;", "Nama", "Kegiatan"};
+        String query = "select j.tanggal, j.namaWajibPajak, j.alamat, o.obyekPajak,  d.kegiatan, k.keterangan from jurnal j join obyekpajak o on j.obyekpajak=o.idobyek"
+                + " join detail d on d.idjurnal=j.idjurnal join keterangan k on k.idketerangan=d.keterangan where j.pegawai =? and j.tanggal=? ";
+        String namaKolom[] = {"Tanggal", "Nama Wajib Pajak", "Alamat", "Obyek Pajak", "Hasil Pendataan", "Keterangan"};
         DefaultTableModel tabel = new DefaultTableModel(null, namaKolom);
         try {
             PreparedStatement st = koneksi.prepareStatement(query);
@@ -316,11 +352,12 @@ public class pegawai {
             System.out.println(query);
             ResultSet rs = st.executeQuery();
             while (rs.next()) {
-                Object data[] = new Object[3];
-
+                Object data[] = new Object[5];
                 data[0] = rs.getString(1);
                 data[1] = rs.getString(2);
                 data[2] = rs.getString(3);
+                data[3] = rs.getString(4);
+                data[4] = rs.getString(5);
                 tabel.addRow(data);
             }
 
@@ -332,9 +369,10 @@ public class pegawai {
     }
 
     public DefaultTableModel bacaTabelJurnalBulan(String nip, Date tanggal) throws ParseException {
-        String query = "SELECT j.tanggal, p.nama, j.kegiatan"
-                + "  FROM pegawai p join jurnal j on p.nip=j.pegawai WHERE p.nip=? and SUBSTRING(j.tanggal,6,2)=? ORDER BY tanggal  asc;";
-        String namaKolom[] = {"Tanggal", "Nama", "Kegiatan"};
+        String query = "select j.tanggal, j.namaWajibPajak, j.alamat, o.obyekPajak,  d.kegiatan, k.keterangan from jurnal j join obyekpajak o on j.obyekpajak=o.idobyek"
+                + " join detail d on d.idjurnal=j.idjurnal join keterangan k on k.idketerangan=d.keterangan where j.pegawai =? and  SUBSTRING(j.tanggal,6,2)=? ORDER BY tanggal  asc;";
+        String namaKolom[] = {"Tanggal", "Nama Wajib Pajak", "Alamat", "Obyek Pajak", "Hasil Pendataan", "Keterangan"};
+
         DefaultTableModel tabel = new DefaultTableModel(null, namaKolom);
         try {
             PreparedStatement st = koneksi.prepareStatement(query);
@@ -351,10 +389,12 @@ public class pegawai {
             System.out.println(query);
             ResultSet rs = st.executeQuery();
             while (rs.next()) {
-                Object data[] = new Object[3];
+                Object data[] = new Object[5];
                 data[0] = rs.getString(1);
                 data[1] = rs.getString(2);
                 data[2] = rs.getString(3);
+                data[3] = rs.getString(4);
+                data[4] = rs.getString(5);
                 tabel.addRow(data);
             }
 
@@ -366,9 +406,10 @@ public class pegawai {
     }
 
     public DefaultTableModel bacaTabelJurnalTahun(String nip, Date tanggal) throws ParseException {
-        String query = "SELECT j.tanggal, p.nama, j.kegiatan"
-                + "  FROM pegawai p join jurnal j on p.nip=j.pegawai WHERE p.nip=? and SUBSTRING(j.tanggal,1,4)=? ORDER BY tanggal  desc;";
-        String namaKolom[] = {"Tanggal", "Nama", "Kegiatan"};
+        String query = "select j.tanggal, j.namaWajibPajak, j.alamat, o.obyekPajak,  d.kegiatan, k.keterangan from jurnal j join obyekpajak o on j.obyekpajak=o.idobyek"
+                + " join detail d on d.idjurnal=j.idjurnal join keterangan k on k.idketerangan=d.keterangan where j.pegawai =? and SUBSTRING(j.tanggal,1,4)=? ORDER BY tanggal  desc; ";
+        String namaKolom[] = {"Tanggal", "Nama Wajib Pajak", "Alamat", "Obyek Pajak", "Hasil Pendataan", "Keterangan"};
+
         DefaultTableModel tabel = new DefaultTableModel(null, namaKolom);
         try {
             PreparedStatement st = koneksi.prepareStatement(query);
@@ -378,17 +419,19 @@ public class pegawai {
             java.sql.Date sqlDate = new java.sql.Date(date.getTime());
             System.out.println(sqlDate + " ayam ");
             String tanggal1 = format.format(sqlDate);
-            String tanggal2 = tanggal1.substring(0,4);
+            String tanggal2 = tanggal1.substring(0, 4);
             System.out.println(tanggal2 + " ayam22 ");
             st.setString(1, nip);
             st.setString(2, tanggal2);
             System.out.println(query);
             ResultSet rs = st.executeQuery();
             while (rs.next()) {
-                Object data[] = new Object[3];
+                Object data[] = new Object[5];
                 data[0] = rs.getString(1);
                 data[1] = rs.getString(2);
                 data[2] = rs.getString(3);
+                data[3] = rs.getString(4);
+                data[4] = rs.getString(5);
                 tabel.addRow(data);
             }
 
@@ -400,9 +443,10 @@ public class pegawai {
     }
 
     public DefaultTableModel bacaTabelJurnalRange(String nip, Date tanggal1, Date tanggal2) throws ParseException {
-        String query = "SELECT j.tanggal, p.nama, j.kegiatan"
-                + "  FROM pegawai p join jurnal j on p.nip=j.pegawai WHERE p.nip=? and tanggal BETWEEN ? and ?  ORDER BY tanggal desc;";
-        String namaKolom[] = {"Tanggal", "Nama", "Kegiatan"};
+        String query = "select j.tanggal, j.namaWajibPajak, j.alamat, o.obyekPajak,  d.kegiatan, k.keterangan from jurnal j join obyekpajak o on j.obyekpajak=o.idobyek"
+                + " join detail d on d.idjurnal=j.idjurnal join keterangan k on k.idketerangan=d.keterangan where j.pegawai =? and j.tanggal BETWEEN ? and ? ORDER BY tanggal  desc; ";
+        String namaKolom[] = {"Tanggal", "Nama Wajib Pajak", "Alamat", "Obyek Pajak", "Hasil Pendataan", "Keterangan"};
+
         DefaultTableModel tabel = new DefaultTableModel(null, namaKolom);
         try {
             PreparedStatement st = koneksi.prepareStatement(query);
@@ -426,11 +470,12 @@ public class pegawai {
             System.out.println(query);
             ResultSet rs = st.executeQuery();
             while (rs.next()) {
-                Object data[] = new Object[4];
-
+                Object data[] = new Object[5];
                 data[0] = rs.getString(1);
                 data[1] = rs.getString(2);
                 data[2] = rs.getString(3);
+                data[3] = rs.getString(4);
+                data[4] = rs.getString(5);
                 tabel.addRow(data);
             }
 
@@ -441,17 +486,91 @@ public class pegawai {
         return tabel;
     }
 
-    public boolean tambahJurnal(String nip, String kegiatan, String nama, String alamat, int obyekPajak, int keterangan) {
-        String query = "insert into `jurnal` (`tanggal`,`pegawai`,`kegiatan`,`namaWajibPajak`, `alamat`, `obyekPajak`, `keterangan`)VALUES(CURRENT_DATE,?,?,?,?,?,?)";
+    public int getID(String nip) {
+        String query = "select idjurnal from jurnal where pegawai=? order by idjurnal desc LIMIT 1 ";
+        int barang = 0;
+        try {
+            PreparedStatement st = koneksi.prepareStatement(query);
+            st.setString(1, nip);
+            ResultSet rs = st.executeQuery();
+            rs.next();
+            barang = rs.getInt("idjurnal");
+        } catch (SQLException ex) {
+            ex.printStackTrace();
+            ex.getMessage();
+        }
+        return barang;
+    }
+
+     public boolean tambahketerangan(String keterangan) {
+        String query = "insert into `keterangan` (`keterangan`)VALUES(?)";
+        System.out.println(query);
+        try {
+            PreparedStatement st = koneksi.prepareStatement(query);
+            st.setString(1, keterangan);
+            int status = st.executeUpdate();
+            if (status > 0) {
+                return true;
+            } else {
+                return false;
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+            e.getMessage();
+        }
+        return false;
+    }
+
+     public boolean tambahobyek(String obyek) {
+        String query = "insert into `obyekpajak` (`obyekpajak`)VALUES(?)";
+        System.out.println(query);
+        try {
+            PreparedStatement st = koneksi.prepareStatement(query);
+            st.setString(1, obyek);
+            int status = st.executeUpdate();
+            if (status > 0) {
+                return true;
+            } else {
+                return false;
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+            e.getMessage();
+        }
+        return false;
+    }
+    
+    public boolean tambahAwal(String nip, String nama, String alamat, int obyekPajak) {
+        String query = "insert into `jurnal` (`tanggal`,`pegawai`,`namaWajibPajak`, `alamat`, `obyekPajak`)VALUES(CURRENT_DATE,?,?,?,?)";
         System.out.println(query);
         try {
             PreparedStatement st = koneksi.prepareStatement(query);
             st.setString(1, nip);
+            st.setString(2, nama);
+            st.setString(3, alamat);
+            st.setInt(4, obyekPajak);
+
+            int status = st.executeUpdate();
+            if (status > 0) {
+                return true;
+            } else {
+                return false;
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+            e.getMessage();
+        }
+        return false;
+    }
+
+    public boolean tambahJurnal(int idJurnal, String kegiatan, int keterangan) {
+        String query = "insert into `detail` (`idjurnal`,`kegiatan`,`keterangan`)VALUES(?,?,?)";
+        System.out.println(query);
+        try {
+            PreparedStatement st = koneksi.prepareStatement(query);
+            st.setInt(1, idJurnal);
             st.setString(2, kegiatan);
-            st.setString(3, nama);
-            st.setString(4, alamat);
-            st.setInt(5, obyekPajak);
-            st.setInt(6, keterangan);
+            st.setInt(3, keterangan);
             int status = st.executeUpdate();
             if (status > 0) {
                 return true;
@@ -466,9 +585,8 @@ public class pegawai {
     }
 
     public boolean export(String nip, String nama, String jabatan, String tanggal) throws FileNotFoundException, IOException, SQLException {
-        String query = "SELECT j.tanggal, p.nama,p.nip, j.kegiatan "
-                + "FROM pegawai p JOIN jurnal j on p.nip=j.pegawai where nip=?";
-
+        String query = "select j.tanggal, j.namaWajibPajak, j.alamat, o.obyekPajak,  d.kegiatan, k.keterangan from jurnal j join obyekpajak o on j.obyekpajak=o.idobyek"
+                + " join detail d on d.idjurnal=j.idjurnal join keterangan k on k.idketerangan=d.keterangan where j.pegawai =? and j.tanggal BETWEEN ? and ? ORDER BY tanggal  desc; ";
         String query2 = "SELECT SUBSTRING (tanggal,6,2) from jurnal where tanggal=?";
 
         try {
@@ -489,7 +607,10 @@ public class pegawai {
             style.setFont(font);
 
             rowhead.createCell((short) 0).setCellValue("Tanggal");
-            rowhead.createCell((short) 1).setCellValue("Kegiatan");
+            rowhead.createCell((short) 1).setCellValue("Nama Wajib Pajak");
+            rowhead.createCell((short) 2).setCellValue("Alamat");
+            rowhead.createCell((short) 3).setCellValue("Hasil Pendataan");
+            rowhead.createCell((short) 4).setCellValue("Keterangan");
 
             Row rowTotal = sheet.createRow(0);
             Cell cellTextTotal = rowTotal.createCell(0);
@@ -510,7 +631,10 @@ public class pegawai {
                 HSSFRow row = sheet.createRow((short) i);
 
                 row.createCell((short) 0).setCellValue(rs.getString("tanggal"));
-                row.createCell((short) 1).setCellValue(rs.getString("kegiatan"));
+                row.createCell((short) 1).setCellValue(rs.getString("namaWajibPajak"));
+                row.createCell((short) 2).setCellValue(rs.getString("alamat"));
+                row.createCell((short) 3).setCellValue(rs.getString("kegiatan"));
+                row.createCell((short) 4).setCellValue(rs.getString("keterangan"));
 
                 nip = rs.getString("nip");
                 i++;
@@ -534,15 +658,14 @@ public class pegawai {
         return false;
     }
 
-     public boolean export2(String nip, String nama, String jabatan, Date tanggal1, Date tanggal2) throws FileNotFoundException, IOException, SQLException {
-        String query = "SELECT j.tanggal, p.nama,p.nip, j.kegiatan "
-                + "FROM pegawai p JOIN jurnal j on p.nip=j.pegawai where nip=? and tanggal between ? and ?";
-
+    public boolean export2(String nip, String nama, String jabatan, Date tanggal1, Date tanggal2) throws FileNotFoundException, IOException, SQLException {
+        String query = "select j.tanggal, j.namaWajibPajak, j.alamat, o.obyekPajak,  d.kegiatan, k.keterangan from jurnal j join obyekpajak o on j.obyekpajak=o.idobyek"
+                + " join detail d on d.idjurnal=j.idjurnal join keterangan k on k.idketerangan=d.keterangan where j.pegawai =? and j.tanggal BETWEEN ? and ? ORDER BY tanggal  desc; ";
 
         try {
             PreparedStatement st = koneksi.prepareStatement(query);
             System.out.println(nip);
-            
+
             DateFormat format1 = new SimpleDateFormat("yyyy-MM-dd");
             java.util.Date date1 = tanggal1;
             System.out.println(date1);
@@ -553,8 +676,7 @@ public class pegawai {
             java.util.Date date2 = tanggal2;
             System.out.println(date2);
             java.sql.Date sqlDate2 = new java.sql.Date(date2.getTime());
-            
-            
+
             st.setString(1, nip);
             st.setDate(2, sqlDate1);
             st.setDate(3, sqlDate2);
@@ -572,7 +694,10 @@ public class pegawai {
             style.setFont(font);
 
             rowhead.createCell((short) 0).setCellValue("Tanggal");
-            rowhead.createCell((short) 1).setCellValue("Kegiatan");
+            rowhead.createCell((short) 1).setCellValue("Nama Wajib Pajak");
+            rowhead.createCell((short) 2).setCellValue("Alamat");
+            rowhead.createCell((short) 3).setCellValue("Hasil Pendataan");
+            rowhead.createCell((short) 4).setCellValue("Keterangan");
 
             Row rowTotal = sheet.createRow(0);
             Cell cellTextTotal = rowTotal.createCell(0);
@@ -591,16 +716,18 @@ public class pegawai {
             String desa = null;
             while (rs.next()) {
                 HSSFRow row = sheet.createRow((short) i);
-
                 row.createCell((short) 0).setCellValue(rs.getString("tanggal"));
-                row.createCell((short) 1).setCellValue(rs.getString("kegiatan"));
+                row.createCell((short) 1).setCellValue(rs.getString("namaWajibPajak"));
+                row.createCell((short) 2).setCellValue(rs.getString("alamat"));
+                row.createCell((short) 3).setCellValue(rs.getString("kegiatan"));
+                row.createCell((short) 4).setCellValue(rs.getString("keterangan"));
 
                 nip = rs.getString("nip");
                 i++;
             }
             DateTimeFormatter dtf = DateTimeFormatter.ofPattern("dd-MM-yyyy");
             LocalDate localDate = LocalDate.now();
-            String yemi = System.getProperty("user.home") + "/Laporan Kinerja" + nip +  ".xls";
+            String yemi = System.getProperty("user.home") + "/Laporan Kinerja" + nip + ".xls";
             FileOutputStream fileOut = new FileOutputStream(yemi);
             File file = new java.io.File(yemi);
 //            file.mkdirs();

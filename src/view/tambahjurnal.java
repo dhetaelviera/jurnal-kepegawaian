@@ -14,7 +14,9 @@ import javax.swing.DefaultComboBoxModel;
 import javax.swing.JButton;
 import javax.swing.JComboBox;
 import javax.swing.JLabel;
+import javax.swing.JTextArea;
 import javax.swing.JTextField;
+import javax.swing.table.DefaultTableModel;
 import model.pegawai;
 
 /**
@@ -61,10 +63,14 @@ public class tambahjurnal extends javax.swing.JFrame {
 
         return mObyek[0][indeks];
     }
-    
-      public void setKet(String mKeterangan[][]) {
+
+    public void setKet(String mKeterangan[][]) {
         this.mKeterangan = mKeterangan;
         keterangan.setModel(new DefaultComboBoxModel<>(mKeterangan[1]));
+    }
+
+    public void ketbaru(String a) {
+        keterangan.setSelectedItem(a);
     }
 
     public String getKet() {
@@ -82,12 +88,12 @@ public class tambahjurnal extends javax.swing.JFrame {
     public String getKegiatan() {
         return kegiatan.getText();
     }
-    
-    public String getNamanya(){
+
+    public String getNamanya() {
         return nama.getText();
     }
-    
-    public String getLokasi(){
+
+    public String getLokasi() {
         return lokasi.getText();
     }
 
@@ -95,8 +101,24 @@ public class tambahjurnal extends javax.swing.JFrame {
         tambah.addActionListener(a);
     }
 
+    public void tabeljurnal(DefaultTableModel t) {
+        jurnal.setModel(t);
+    }
+
     public void kembaliListener(ActionListener a) {
         kembali.addActionListener(a);
+    }
+
+    public void submitListener(ActionListener a) {
+        submit.addActionListener(a);
+    }
+
+    public void addKeterangan(ActionListener a) {
+        addKet.addActionListener(a);
+    }
+
+    public void addObPajak(ActionListener a) {
+        addObyek.addActionListener(a);
     }
 
     public JButton pendataan() {
@@ -105,6 +127,34 @@ public class tambahjurnal extends javax.swing.JFrame {
 
     public JButton laporan() {
         return laporan;
+    }
+    
+    public JButton tambahket(){
+        return addKet;
+    }
+    
+    public JButton tambahobpajak(){
+        return addObyek;
+    }
+
+    public JTextField lokasi1() {
+        return lokasi;
+    }
+
+    public JTextField nama() {
+        return nama;
+    }
+
+    public JButton add() {
+        return submit;
+    }
+
+    public JComboBox obyek() {
+        return obyek;
+    }
+
+    public void keg(String lala) {
+        this.kegiatan.setText(lala);
     }
 
     /**
@@ -116,7 +166,6 @@ public class tambahjurnal extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        kegiatan = new javax.swing.JTextField();
         tanggal = new javax.swing.JLabel();
         jLabel2 = new javax.swing.JLabel();
         jLabel3 = new javax.swing.JLabel();
@@ -132,24 +181,31 @@ public class tambahjurnal extends javax.swing.JFrame {
         lokasi = new javax.swing.JTextField();
         nama = new javax.swing.JTextField();
         jLabel11 = new javax.swing.JLabel();
+        jScrollPane1 = new javax.swing.JScrollPane();
+        kegiatan = new javax.swing.JTextArea();
+        jScrollPane2 = new javax.swing.JScrollPane();
+        jurnal = new javax.swing.JTable();
+        submit = new javax.swing.JButton();
+        selesai = new javax.swing.JButton();
+        addObyek = new javax.swing.JButton();
+        addKet = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setPreferredSize(new java.awt.Dimension(600, 500));
         getContentPane().setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
-        getContentPane().add(kegiatan, new org.netbeans.lib.awtextra.AbsoluteConstraints(90, 200, 260, 40));
-        getContentPane().add(tanggal, new org.netbeans.lib.awtextra.AbsoluteConstraints(100, 80, 120, 20));
+        getContentPane().add(tanggal, new org.netbeans.lib.awtextra.AbsoluteConstraints(90, 50, 120, 20));
 
         jLabel2.setText("Kegiatan:");
-        getContentPane().add(jLabel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 200, -1, 30));
+        getContentPane().add(jLabel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 180, -1, 30));
 
         jLabel3.setText("Keterangan:");
-        getContentPane().add(jLabel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 270, -1, -1));
+        getContentPane().add(jLabel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 250, -1, -1));
 
         tambah.setText("simpan");
-        getContentPane().add(tambah, new org.netbeans.lib.awtextra.AbsoluteConstraints(170, 340, -1, -1));
+        getContentPane().add(tambah, new org.netbeans.lib.awtextra.AbsoluteConstraints(90, 280, -1, -1));
 
         kembali.setText("kembali");
-        getContentPane().add(kembali, new org.netbeans.lib.awtextra.AbsoluteConstraints(100, 340, -1, -1));
+        getContentPane().add(kembali, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 280, -1, -1));
 
         pendataan.setText("pendataan");
         getContentPane().add(pendataan, new org.netbeans.lib.awtextra.AbsoluteConstraints(70, 10, -1, -1));
@@ -158,13 +214,13 @@ public class tambahjurnal extends javax.swing.JFrame {
         getContentPane().add(laporan, new org.netbeans.lib.awtextra.AbsoluteConstraints(180, 10, -1, -1));
 
         jLabel4.setText("Tanggal:");
-        getContentPane().add(jLabel4, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 80, -1, -1));
+        getContentPane().add(jLabel4, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 50, -1, -1));
 
         jLabel9.setText("Nama Wajib Pajak/Obyek Pajak:");
-        getContentPane().add(jLabel9, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 110, -1, -1));
+        getContentPane().add(jLabel9, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 80, -1, -1));
 
         jLabel10.setText("Obyek Pajak:");
-        getContentPane().add(jLabel10, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 170, -1, -1));
+        getContentPane().add(jLabel10, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 140, -1, -1));
 
         keterangan.setBackground(new java.awt.Color(51, 153, 0));
         keterangan.setFont(new java.awt.Font("Segoe UI Semibold", 0, 14)); // NOI18N
@@ -174,7 +230,7 @@ public class tambahjurnal extends javax.swing.JFrame {
                 keteranganActionPerformed(evt);
             }
         });
-        getContentPane().add(keterangan, new org.netbeans.lib.awtextra.AbsoluteConstraints(100, 270, 120, 20));
+        getContentPane().add(keterangan, new org.netbeans.lib.awtextra.AbsoluteConstraints(90, 250, 120, 20));
 
         obyek.setBackground(new java.awt.Color(51, 153, 0));
         obyek.setFont(new java.awt.Font("Segoe UI Semibold", 0, 14)); // NOI18N
@@ -184,12 +240,45 @@ public class tambahjurnal extends javax.swing.JFrame {
                 obyekActionPerformed(evt);
             }
         });
-        getContentPane().add(obyek, new org.netbeans.lib.awtextra.AbsoluteConstraints(110, 170, 120, 20));
-        getContentPane().add(lokasi, new org.netbeans.lib.awtextra.AbsoluteConstraints(80, 140, 280, -1));
-        getContentPane().add(nama, new org.netbeans.lib.awtextra.AbsoluteConstraints(230, 110, 240, -1));
+        getContentPane().add(obyek, new org.netbeans.lib.awtextra.AbsoluteConstraints(100, 140, 120, 20));
+        getContentPane().add(lokasi, new org.netbeans.lib.awtextra.AbsoluteConstraints(70, 110, 280, -1));
+        getContentPane().add(nama, new org.netbeans.lib.awtextra.AbsoluteConstraints(220, 80, 240, -1));
 
         jLabel11.setText("Lokasi:");
-        getContentPane().add(jLabel11, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 140, -1, -1));
+        getContentPane().add(jLabel11, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 110, -1, -1));
+
+        kegiatan.setColumns(20);
+        kegiatan.setRows(5);
+        jScrollPane1.setViewportView(kegiatan);
+
+        getContentPane().add(jScrollPane1, new org.netbeans.lib.awtextra.AbsoluteConstraints(70, 180, 280, 60));
+
+        jurnal.setModel(new javax.swing.table.DefaultTableModel(
+            new Object [][] {
+                {null, null, null, null, null},
+                {null, null, null, null, null},
+                {null, null, null, null, null},
+                {null, null, null, null, null}
+            },
+            new String [] {
+                "Nama Wajib Pajak", "Alamat", "Obyek Pajak", "Hasil Pendataan", "Keterangan"
+            }
+        ));
+        jScrollPane2.setViewportView(jurnal);
+
+        getContentPane().add(jScrollPane2, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 330, 480, 110));
+
+        submit.setText("tambahkan");
+        getContentPane().add(submit, new org.netbeans.lib.awtextra.AbsoluteConstraints(370, 140, -1, -1));
+
+        selesai.setText("selesai");
+        getContentPane().add(selesai, new org.netbeans.lib.awtextra.AbsoluteConstraints(210, 280, -1, -1));
+
+        addObyek.setText("+");
+        getContentPane().add(addObyek, new org.netbeans.lib.awtextra.AbsoluteConstraints(230, 140, -1, -1));
+
+        addKet.setText("+");
+        getContentPane().add(addKet, new org.netbeans.lib.awtextra.AbsoluteConstraints(230, 250, -1, -1));
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
@@ -238,13 +327,18 @@ public class tambahjurnal extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton addKet;
+    private javax.swing.JButton addObyek;
     private javax.swing.JLabel jLabel10;
     private javax.swing.JLabel jLabel11;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel9;
-    private javax.swing.JTextField kegiatan;
+    private javax.swing.JScrollPane jScrollPane1;
+    private javax.swing.JScrollPane jScrollPane2;
+    private javax.swing.JTable jurnal;
+    private javax.swing.JTextArea kegiatan;
     private javax.swing.JButton kembali;
     private javax.swing.JComboBox<String> keterangan;
     private javax.swing.JButton laporan;
@@ -252,6 +346,8 @@ public class tambahjurnal extends javax.swing.JFrame {
     private javax.swing.JTextField nama;
     private javax.swing.JComboBox<String> obyek;
     private javax.swing.JButton pendataan;
+    private javax.swing.JButton selesai;
+    private javax.swing.JButton submit;
     private javax.swing.JButton tambah;
     private javax.swing.JLabel tanggal;
     // End of variables declaration//GEN-END:variables
