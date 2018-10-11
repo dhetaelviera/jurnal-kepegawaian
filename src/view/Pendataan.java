@@ -44,10 +44,13 @@ public class Pendataan extends javax.swing.JFrame {
     }
 
     public void setTanggal(String tanggal) {
-
         this.tanggalnow.setText(tanggal);
     }
 
+    public void keluarListener(ActionListener a){
+        keluar.addActionListener(a);
+    }
+    
     public void tambahListener(ActionListener a) {
         tambahJurnal.addActionListener(a);
     }
@@ -167,6 +170,7 @@ public class Pendataan extends javax.swing.JFrame {
         tanggalnow = new javax.swing.JLabel();
         golruang = new javax.swing.JLabel();
         jLabel9 = new javax.swing.JLabel();
+        keluar = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setPreferredSize(new java.awt.Dimension(600, 500));
@@ -249,6 +253,9 @@ public class Pendataan extends javax.swing.JFrame {
         jLabel9.setText("Pangkat:");
         getContentPane().add(jLabel9, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 180, -1, -1));
 
+        keluar.setText("keluar");
+        getContentPane().add(keluar, new org.netbeans.lib.awtextra.AbsoluteConstraints(280, 20, -1, -1));
+
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
@@ -306,6 +313,7 @@ public class Pendataan extends javax.swing.JFrame {
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JLabel jabatan;
     private javax.swing.JTable jurnal;
+    private javax.swing.JButton keluar;
     private javax.swing.JButton laporan;
     private javax.swing.JLabel nama;
     private javax.swing.JLabel nip;

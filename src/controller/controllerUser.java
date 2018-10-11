@@ -74,6 +74,7 @@ public class controllerUser {
         pendataan.tahunListener(new caritahunListener());
         pendataan.tambahListener(new tambahjurnalListener());
         pendataan.laporanListener(new laporanListener());
+        pendataan.keluarListener(new keluarPendataan());
         DateTimeFormatter dtf = DateTimeFormatter.ofPattern("dd-MM-yyyy");
         LocalDate localDate = LocalDate.now();
         String tanggal = dtf.format(localDate);
@@ -126,6 +127,7 @@ public class controllerUser {
         laporan.export2Listener(new exportRange());
         laporan.export().setEnabled(false);
         laporan.export2().setEnabled(false);
+        laporan.keluarListener(new keluarlaporan());
 
     }
 
@@ -146,6 +148,36 @@ public class controllerUser {
             }
         } catch (ParseException ex) {
             Logger.getLogger(controllerUser.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }
+
+    private class keluarlaporan implements ActionListener {
+
+        public keluarlaporan() {
+        }
+
+        @Override
+        public void actionPerformed(ActionEvent e) {
+            int pilihan = JOptionPane.showConfirmDialog(laporan, "Anda yakin ingin keluar? ", " Konfirmasi", JOptionPane.YES_NO_OPTION);
+            if (pilihan == JOptionPane.YES_OPTION) {
+                new controllerUser();
+                laporan.dispose();
+            }
+        }
+    }
+
+    private class keluarPendataan implements ActionListener {
+
+        public keluarPendataan() {
+        }
+
+        @Override
+        public void actionPerformed(ActionEvent e) {
+            int pilihan = JOptionPane.showConfirmDialog(pendataan, "Anda yakin ingin keluar? ", " Konfirmasi", JOptionPane.YES_NO_OPTION);
+            if (pilihan == JOptionPane.YES_OPTION) {
+                new controllerUser();
+                pendataan.dispose();
+            }
         }
     }
 
@@ -280,7 +312,7 @@ public class controllerUser {
             DateFormat format = new SimpleDateFormat("yyyy-MM-dd");
             String bulan = lala.substring(3, 10);
             try {
-                mPegawai.export(nip, nama, jabatan, bulan);
+                mPegawai.export(nip, nama, jabatan, tanggal);
                 JOptionPane.showMessageDialog(laporan, "Laporan Kinerja berhasil di eksport\n" + System.getProperty("user.home") + "/Downloads/bapenda/");
             } catch (IOException ex) {
                 Logger.getLogger(controllerUser.class.getName()).log(Level.SEVERE, null, ex);
@@ -446,21 +478,22 @@ public class controllerUser {
             nip = login.nip();
             System.out.println(nama);
             pangkat = mPegawai.getPangkat(nip);
-            System.out.println(pangkat + "ini pangkat");
-            System.out.println("ini 1 " + nama);
             if (nama.equalsIgnoreCase("") || nip.equalsIgnoreCase("")) {
                 JOptionPane.showMessageDialog(login, "Nama atau NIP tidak boleh kosong");
             } else {
                 int level = mPegawai.login(nama, nip);
-                String jabatan1 = mPegawai.getJabatan(login.nip());
-                System.out.println("jabatannya adalah= " + jabatan1);
-                System.out.println(nip);
-                new controllerUser(nip, nama);
-                login.dispose();
-                JOptionPane.showMessageDialog(pendataan, "Selamat datang NIP " + nama);
+                if (level == 0) {
+                    JOptionPane.showMessageDialog(login, "NIP tidak sesuai dengan nama yang dipilih");
+                } else if(level==1){
+                    String jabatan1 = mPegawai.getJabatan(login.nip());
+                    System.out.println("jabatannya adalah= " + jabatan1);
+                    System.out.println(nip);
+                    new controllerUser(nip, nama);
+                    login.dispose();
+                    JOptionPane.showMessageDialog(pendataan, "Selamat datang NIP " + nama);
 
+                }
             }
         }
     }
-
 }

@@ -83,6 +83,10 @@ public class laporan extends javax.swing.JFrame {
         pendataan.addActionListener(a);
     }
 
+    public void keluarListener(ActionListener a){
+        keluar.addActionListener(a);
+    }
+    
     public JButton bulanButton() {
         return bulan;
     }
@@ -179,6 +183,7 @@ public class laporan extends javax.swing.JFrame {
         golruang = new javax.swing.JLabel();
         jLabel7 = new javax.swing.JLabel();
         export2 = new javax.swing.JButton();
+        keluar = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         getContentPane().setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
@@ -280,6 +285,9 @@ public class laporan extends javax.swing.JFrame {
         export2.setText("export ke excel");
         getContentPane().add(export2, new org.netbeans.lib.awtextra.AbsoluteConstraints(500, 330, -1, -1));
 
+        keluar.setText("keluar");
+        getContentPane().add(keluar, new org.netbeans.lib.awtextra.AbsoluteConstraints(290, 20, -1, -1));
+
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
@@ -349,6 +357,7 @@ public class laporan extends javax.swing.JFrame {
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JLabel jabatan;
     private javax.swing.JTable jurnal;
+    private javax.swing.JButton keluar;
     private javax.swing.JButton laporan;
     private javax.swing.JLabel nama;
     private javax.swing.JLabel nip;

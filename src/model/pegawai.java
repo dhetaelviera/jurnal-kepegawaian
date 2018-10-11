@@ -64,15 +64,19 @@ public class pegawai {
         return id;
     }
 
-    public int login(String nama, String nip) {
-        String query = "select * from pegawai where nama = ? and nip =?";
-        System.out.println(query);
-        int tingkatan = 0;
+
+        public int login(String nama, String nip) {
+        String query ="select * from pegawai where nama = ? and nip =?";
+            System.out.println(query);
+        int tingkatan=0;
         try {
             PreparedStatement st = koneksi.prepareStatement(query);
             st.setString(1, nama);
             st.setString(2, nip);
             ResultSet rs = st.executeQuery();
+            while (rs.next()) {
+                tingkatan = rs.getInt("level");
+            }
 
         } catch (SQLException e) {
             e.printStackTrace();
@@ -389,12 +393,13 @@ public class pegawai {
             System.out.println(query);
             ResultSet rs = st.executeQuery();
             while (rs.next()) {
-                Object data[] = new Object[5];
+                Object data[] = new Object[6];
                 data[0] = rs.getString(1);
                 data[1] = rs.getString(2);
                 data[2] = rs.getString(3);
                 data[3] = rs.getString(4);
                 data[4] = rs.getString(5);
+                data[5] = rs.getString(6);
                 tabel.addRow(data);
             }
 
@@ -426,12 +431,13 @@ public class pegawai {
             System.out.println(query);
             ResultSet rs = st.executeQuery();
             while (rs.next()) {
-                Object data[] = new Object[5];
+                Object data[] = new Object[6];
                 data[0] = rs.getString(1);
                 data[1] = rs.getString(2);
                 data[2] = rs.getString(3);
                 data[3] = rs.getString(4);
                 data[4] = rs.getString(5);
+                data[5] = rs.getString(6);
                 tabel.addRow(data);
             }
 
@@ -470,12 +476,13 @@ public class pegawai {
             System.out.println(query);
             ResultSet rs = st.executeQuery();
             while (rs.next()) {
-                Object data[] = new Object[5];
+                Object data[] = new Object[6];
                 data[0] = rs.getString(1);
                 data[1] = rs.getString(2);
                 data[2] = rs.getString(3);
                 data[3] = rs.getString(4);
                 data[4] = rs.getString(5);
+                data[5] = rs.getString(6);
                 tabel.addRow(data);
             }
 
@@ -502,7 +509,7 @@ public class pegawai {
         return barang;
     }
 
-     public boolean tambahketerangan(String keterangan) {
+    public boolean tambahketerangan(String keterangan) {
         String query = "insert into `keterangan` (`keterangan`)VALUES(?)";
         System.out.println(query);
         try {
@@ -521,7 +528,7 @@ public class pegawai {
         return false;
     }
 
-     public boolean tambahobyek(String obyek) {
+    public boolean tambahobyek(String obyek) {
         String query = "insert into `obyekpajak` (`obyekpajak`)VALUES(?)";
         System.out.println(query);
         try {
@@ -539,7 +546,7 @@ public class pegawai {
         }
         return false;
     }
-    
+
     public boolean tambahAwal(String nip, String nama, String alamat, int obyekPajak) {
         String query = "insert into `jurnal` (`tanggal`,`pegawai`,`namaWajibPajak`, `alamat`, `obyekPajak`)VALUES(CURRENT_DATE,?,?,?,?)";
         System.out.println(query);
@@ -584,18 +591,28 @@ public class pegawai {
         return false;
     }
 
-    public boolean export(String nip, String nama, String jabatan, String tanggal) throws FileNotFoundException, IOException, SQLException {
+    public boolean export(String nip, String nama, String jabatan, Date tanggal) throws FileNotFoundException, IOException, SQLException {
         String query = "select j.tanggal, j.namaWajibPajak, j.alamat, o.obyekPajak,  d.kegiatan, k.keterangan from jurnal j join obyekpajak o on j.obyekpajak=o.idobyek"
-                + " join detail d on d.idjurnal=j.idjurnal join keterangan k on k.idketerangan=d.keterangan where j.pegawai =? and j.tanggal BETWEEN ? and ? ORDER BY tanggal  desc; ";
-        String query2 = "SELECT SUBSTRING (tanggal,6,2) from jurnal where tanggal=?";
+                + " join detail d on d.idjurnal=j.idjurnal join keterangan k on k.idketerangan=d.keterangan where j.pegawai =? and SUBSTRING(tanggal,6,2)=?";
 
         try {
             PreparedStatement st = koneksi.prepareStatement(query);
             System.out.println(nip);
+
+            DateFormat format = new SimpleDateFormat("yyyy-MM-dd");
+            java.util.Date date = tanggal;
+            System.out.println(date);
+            java.sql.Date sqlDate = new java.sql.Date(date.getTime());
+            System.out.println(sqlDate + " ayam ");
+            String tanggal1 = format.format(sqlDate);
+            String tanggal2 = tanggal1.substring(5, 7);
+            System.out.println(tanggal2 + " ayam22 ");
+
             st.setString(1, nip);
+            st.setString(2, tanggal2);
             ResultSet rs = st.executeQuery();
             HSSFWorkbook workbook = new HSSFWorkbook();
-            HSSFSheet sheet = workbook.createSheet("Laporan Kegiatan");
+            HSSFSheet sheet = workbook.createSheet("Laporan Hasil Pendataan ");
             HSSFRow rowhead = sheet.createRow((short) 5);
 
             CellStyle style = workbook.createCellStyle();
@@ -609,14 +626,15 @@ public class pegawai {
             rowhead.createCell((short) 0).setCellValue("Tanggal");
             rowhead.createCell((short) 1).setCellValue("Nama Wajib Pajak");
             rowhead.createCell((short) 2).setCellValue("Alamat");
-            rowhead.createCell((short) 3).setCellValue("Hasil Pendataan");
-            rowhead.createCell((short) 4).setCellValue("Keterangan");
+            rowhead.createCell((short) 3).setCellValue("Obyek Pajak");
+            rowhead.createCell((short) 4).setCellValue("Hasil Pendataan");
+            rowhead.createCell((short) 5).setCellValue("Keterangan");
 
             Row rowTotal = sheet.createRow(0);
             Cell cellTextTotal = rowTotal.createCell(0);
             cellTextTotal.setCellValue("NIP          : " + nip);
             cellTextTotal.setCellStyle(style);
-
+           
             Row rowTotal2 = sheet.createRow(1);
             Cell cellTextTotal2 = rowTotal2.createCell(0);
             cellTextTotal2.setCellValue("Nama       :" + nama);
@@ -629,19 +647,20 @@ public class pegawai {
             String desa = null;
             while (rs.next()) {
                 HSSFRow row = sheet.createRow((short) i);
-
                 row.createCell((short) 0).setCellValue(rs.getString("tanggal"));
                 row.createCell((short) 1).setCellValue(rs.getString("namaWajibPajak"));
                 row.createCell((short) 2).setCellValue(rs.getString("alamat"));
-                row.createCell((short) 3).setCellValue(rs.getString("kegiatan"));
-                row.createCell((short) 4).setCellValue(rs.getString("keterangan"));
+                row.createCell((short) 3).setCellValue(rs.getString("obyekpajak"));
+                row.createCell((short) 4).setCellValue(rs.getString("kegiatan"));
+                row.createCell((short) 5).setCellValue(rs.getString("keterangan"));
 
-                nip = rs.getString("nip");
+                tanggal1 = rs.getString("tanggal");
                 i++;
             }
             DateTimeFormatter dtf = DateTimeFormatter.ofPattern("dd-MM-yyyy");
             LocalDate localDate = LocalDate.now();
-            String yemi = System.getProperty("user.home") + "/Laporan Kinerja" + nip + " bulan " + tanggal + ".xls";
+
+            String yemi = System.getProperty("user.home") + "/Laporan Hasil Pendataan " + nip + " (bulan " + tanggal2 + ") .xls";
             FileOutputStream fileOut = new FileOutputStream(yemi);
             File file = new java.io.File(yemi);
 //            file.mkdirs();
@@ -682,7 +701,7 @@ public class pegawai {
             st.setDate(3, sqlDate2);
             ResultSet rs = st.executeQuery();
             HSSFWorkbook workbook = new HSSFWorkbook();
-            HSSFSheet sheet = workbook.createSheet("Laporan Kegiatan");
+            HSSFSheet sheet = workbook.createSheet("Laporan Hasil Pendataan ");
             HSSFRow rowhead = sheet.createRow((short) 5);
 
             CellStyle style = workbook.createCellStyle();
@@ -696,8 +715,9 @@ public class pegawai {
             rowhead.createCell((short) 0).setCellValue("Tanggal");
             rowhead.createCell((short) 1).setCellValue("Nama Wajib Pajak");
             rowhead.createCell((short) 2).setCellValue("Alamat");
-            rowhead.createCell((short) 3).setCellValue("Hasil Pendataan");
-            rowhead.createCell((short) 4).setCellValue("Keterangan");
+            rowhead.createCell((short) 3).setCellValue("Obyek Pajak");
+            rowhead.createCell((short) 4).setCellValue("Hasil Pendataan");
+            rowhead.createCell((short) 5).setCellValue("Keterangan");
 
             Row rowTotal = sheet.createRow(0);
             Cell cellTextTotal = rowTotal.createCell(0);
@@ -719,15 +739,16 @@ public class pegawai {
                 row.createCell((short) 0).setCellValue(rs.getString("tanggal"));
                 row.createCell((short) 1).setCellValue(rs.getString("namaWajibPajak"));
                 row.createCell((short) 2).setCellValue(rs.getString("alamat"));
-                row.createCell((short) 3).setCellValue(rs.getString("kegiatan"));
-                row.createCell((short) 4).setCellValue(rs.getString("keterangan"));
+                row.createCell((short) 3).setCellValue(rs.getString("obyekpajak"));
+                row.createCell((short) 4).setCellValue(rs.getString("kegiatan"));
+                row.createCell((short) 5).setCellValue(rs.getString("keterangan"));
 
-                nip = rs.getString("nip");
+                tanggal1 = rs.getDate("tanggal");
                 i++;
             }
             DateTimeFormatter dtf = DateTimeFormatter.ofPattern("dd-MM-yyyy");
             LocalDate localDate = LocalDate.now();
-            String yemi = System.getProperty("user.home") + "/Laporan Kinerja" + nip + ".xls";
+            String yemi = System.getProperty("user.home") + "/Laporan Hasil Pendataan " + nip + ".xls";
             FileOutputStream fileOut = new FileOutputStream(yemi);
             File file = new java.io.File(yemi);
 //            file.mkdirs();
