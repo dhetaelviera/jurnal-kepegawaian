@@ -67,7 +67,6 @@ public class controllerUser {
         pendataan.pendataan().setEnabled(false);
         pendataan.setLocationRelativeTo(null);
         pendataan.setResizable(false);
-        pendataan.tabeljurnal(mPegawai.bacaJurnalNow(nip));
         pendataan.resetListener(new resettabel());
         pendataan.cariListener(new caritanggalListener());
         pendataan.cariBulanListener(new caribulanListener());
@@ -79,6 +78,7 @@ public class controllerUser {
         LocalDate localDate = LocalDate.now();
         String tanggal = dtf.format(localDate);
         pendataan.setTanggal(tanggal);
+        pendataan.tabeljurnal(mPegawai.bacaJurnalNow(nip));
     }
 
     public controllerUser(String nip, int a) {
@@ -91,8 +91,8 @@ public class controllerUser {
         LocalDate localDate = LocalDate.now();
         String tanggal = dtf.format(localDate);
         tambahjurnal.setTanggal(tanggal);
-        tambahjurnal.submitListener(new sumbit());
         tambahjurnal.tambahListener(new simpanjurnalListener());
+        tambahjurnal.submitListener(new sumbit());
         tambahjurnal.pendataan().setEnabled(false);
         tambahjurnal.laporan().setEnabled(false);
         tambahjurnal.kembaliListener(new kembali());
@@ -101,7 +101,6 @@ public class controllerUser {
         tambahjurnal.setLocationRelativeTo(null);
         tambahjurnal.addKeterangan(new tambahketerangan());
         tambahjurnal.addObPajak(new tambahObyek());
-        tambahjurnal.kegkeg().setEditable(false);
     }
 
     public controllerUser(String nip, int a, int b, String nama) {
@@ -152,6 +151,33 @@ public class controllerUser {
             Logger.getLogger(controllerUser.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
+
+     private class sumbit implements ActionListener {
+
+        public sumbit() {
+        }
+
+        @Override
+        public void actionPerformed(ActionEvent e) {
+
+            String lokasi = tambahjurnal.getLokasi();
+
+            int obyek = Integer.valueOf(tambahjurnal.getObyek());
+            String namanya = tambahjurnal.getNamanya();
+            if (lokasi != null && namanya != null && !lokasi.equalsIgnoreCase("") && !namanya.equalsIgnoreCase("")) {
+                boolean test = mPegawai.tambahAwal(nip, namanya, lokasi, obyek);
+                JOptionPane.showMessageDialog(tambahjurnal, "Nama Wajib Pajak berhasil dimasukkan, Masukkan hasil pendataan.");
+                tambahjurnal.lokasi1().setEnabled(false);
+                tambahjurnal.nama().setEnabled(false);
+                tambahjurnal.add().setEnabled(false);
+                tambahjurnal.obyek().disable();
+                tambahjurnal.tambahobpajak().setEnabled(false);
+            } else {
+                JOptionPane.showMessageDialog(tambahjurnal, "Nama wajib pajak, lokasi, dan obyek pajak harus terisi");
+            }
+        }
+    }
+
 
     private class selesai implements ActionListener {
 
@@ -294,6 +320,7 @@ public class controllerUser {
                 boolean hapusjuga = mPegawai.hapusJurnal(id);
                 JOptionPane.showMessageDialog(tambahjurnal, "Data tidak tersimpan.");
                 tambahjurnal.dispose();
+                pendataan.tabeljurnal(mPegawai.bacaJurnalNow(nip));
                 new controllerUser(nip, nama);
 
             } else if (pilihan==JOptionPane.YES_OPTION&&namanya==null&&lokasi==null){
@@ -446,33 +473,7 @@ public class controllerUser {
         }
     }
 
-    private class sumbit implements ActionListener {
-
-        public sumbit() {
-        }
-
-        @Override
-        public void actionPerformed(ActionEvent e) {
-
-            String lokasi = tambahjurnal.getLokasi();
-
-            int obyek = Integer.valueOf(tambahjurnal.getObyek());
-            String namanya = tambahjurnal.getNamanya();
-            if (lokasi != null && namanya != null && !lokasi.equalsIgnoreCase("") && !namanya.equalsIgnoreCase("")) {
-                boolean test = mPegawai.tambahAwal(nip, namanya, lokasi, obyek);
-                JOptionPane.showMessageDialog(tambahjurnal, "Nama Wajib Pajak berhasil dimasukkan, Masukkan hasil pendataan.");
-                tambahjurnal.lokasi1().setEnabled(false);
-                tambahjurnal.nama().setEnabled(false);
-                tambahjurnal.add().setEnabled(false);
-                tambahjurnal.obyek().disable();
-                tambahjurnal.tambahobpajak().setEnabled(false);
-                tambahjurnal.kegkeg().setEnabled(true);
-            } else {
-                JOptionPane.showMessageDialog(tambahjurnal, "Nama wajib pajak, lokasi, dan obyek pajak harus terisi");
-            }
-        }
-    }
-
+  
     private class simpanjurnalListener implements ActionListener {
 
         public simpanjurnalListener() {
@@ -511,6 +512,7 @@ public class controllerUser {
             nama = login.getNama();
             nip = login.nip();
             System.out.println(nama);
+            System.out.println(nip);
             pangkat = mPegawai.getPangkat(nip);
             if (nama.equalsIgnoreCase("") || nip.equalsIgnoreCase("")) {
                 JOptionPane.showMessageDialog(login, "Nama atau NIP tidak boleh kosong");

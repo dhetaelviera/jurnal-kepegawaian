@@ -165,6 +165,8 @@ public class tambahjurnal extends javax.swing.JFrame {
         return kegiatan;
     }
     
+    
+    
     public void keg(String lala) {
         this.kegiatan.setText(lala);
     }

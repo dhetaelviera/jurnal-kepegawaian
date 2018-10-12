@@ -178,17 +178,17 @@ public class Pendataan extends javax.swing.JFrame {
 
         jurnal.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
-                {null, null, null},
-                {null, null, null},
-                {null, null, null},
-                {null, null, null}
+                {null, null, null, null, null, null},
+                {null, null, null, null, null, null},
+                {null, null, null, null, null, null},
+                {null, null, null, null, null, null}
             },
             new String [] {
-                "Tanggal", "Nama", "Kegiatan"
+                "Tanggal", "Nama Wajib Pajak", "Alamat", "Obyek Pajak", "Hasil Pendataan", "Keterangan"
             }
         ) {
             boolean[] canEdit = new boolean [] {
-                false, false, false
+                false, false, false, true, true, true
             };
 
             public boolean isCellEditable(int rowIndex, int columnIndex) {

@@ -356,12 +356,13 @@ public class pegawai {
             System.out.println(query);
             ResultSet rs = st.executeQuery();
             while (rs.next()) {
-                Object data[] = new Object[5];
+                Object data[] = new Object[6];
                 data[0] = rs.getString(1);
                 data[1] = rs.getString(2);
                 data[2] = rs.getString(3);
                 data[3] = rs.getString(4);
                 data[4] = rs.getString(5);
+                data[5] = rs.getString(6);
                 tabel.addRow(data);
             }
 
