@@ -72,6 +72,10 @@ public class tambahjurnal extends javax.swing.JFrame {
     public void ketbaru(String a) {
         keterangan.setSelectedItem(a);
     }
+    
+    public void obbaru(String a) {
+        obyek.setSelectedItem(a);
+    }
 
     public String getKet() {
         int indeks = keterangan.getSelectedIndex();
@@ -107,6 +111,10 @@ public class tambahjurnal extends javax.swing.JFrame {
 
     public void kembaliListener(ActionListener a) {
         kembali.addActionListener(a);
+    }
+    
+    public void selesaiListener(ActionListener a){
+        selesai.addActionListener(a);
     }
 
     public void submitListener(ActionListener a) {
@@ -153,6 +161,10 @@ public class tambahjurnal extends javax.swing.JFrame {
         return obyek;
     }
 
+    public JTextArea kegkeg(){
+        return kegiatan;
+    }
+    
     public void keg(String lala) {
         this.kegiatan.setText(lala);
     }

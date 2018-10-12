@@ -91,15 +91,17 @@ public class controllerUser {
         LocalDate localDate = LocalDate.now();
         String tanggal = dtf.format(localDate);
         tambahjurnal.setTanggal(tanggal);
+        tambahjurnal.submitListener(new sumbit());
         tambahjurnal.tambahListener(new simpanjurnalListener());
         tambahjurnal.pendataan().setEnabled(false);
         tambahjurnal.laporan().setEnabled(false);
         tambahjurnal.kembaliListener(new kembali());
+        tambahjurnal.selesaiListener(new selesai());
         tambahjurnal.setResizable(false);
         tambahjurnal.setLocationRelativeTo(null);
-        tambahjurnal.submitListener(new sumbit());
         tambahjurnal.addKeterangan(new tambahketerangan());
         tambahjurnal.addObPajak(new tambahObyek());
+        tambahjurnal.kegkeg().setEditable(false);
     }
 
     public controllerUser(String nip, int a, int b, String nama) {
@@ -151,6 +153,30 @@ public class controllerUser {
         }
     }
 
+    private class selesai implements ActionListener {
+
+        public selesai() {
+        }
+
+        @Override
+        public void actionPerformed(ActionEvent e) {
+            String namanya = tambahjurnal.getNamanya();
+            int pilihan = JOptionPane.showConfirmDialog(tambahjurnal, "Apakah pendataan dengan nama wajib pajak " + namanya + " sudah selesai?", " Konfirmasi", JOptionPane.YES_NO_OPTION);
+
+            if (pilihan == JOptionPane.NO_OPTION) {
+                tambahjurnal.tabeljurnal(mPegawai.bacaJurnalNowSatuLokasi(nip, namanya));
+            } else if (pilihan == JOptionPane.YES_OPTION) {
+                JOptionPane.showMessageDialog(tambahjurnal, "Pendataan dengan nama wajib pajak " + namanya + " Selesai");
+                tambahjurnal.dispose();
+                new controllerUser(nip, mPegawai.getNama(nip));
+            } else {
+                JOptionPane.showMessageDialog(tambahjurnal, "Kesalahan jaringan");
+                tambahjurnal.tabeljurnal(mPegawai.bacaJurnalNowSatuLokasi(nip, namanya));
+            }
+
+        }
+    }
+
     private class keluarlaporan implements ActionListener {
 
         public keluarlaporan() {
@@ -193,10 +219,10 @@ public class controllerUser {
             System.out.println(ob);
             if (ob != null || !ob.equalsIgnoreCase("")) {
                 boolean tambah = mPegawai.tambahobyek(ob);
-                String mKeterangan[][];
-                mKeterangan = mPegawai.getKeterangan();
-                tambahjurnal.setKet(mKeterangan);
-                tambahjurnal.ketbaru(ob);
+                String mObyek[][];
+                mObyek = mPegawai.getObyekPajak();
+                tambahjurnal.setObyek(mObyek);
+                tambahjurnal.obbaru(ob);
             } else {
                 JOptionPane.showMessageDialog(tambahjurnal, "Tidak ada obyek pajak tambahan yg dimasukkan");
             }
@@ -221,32 +247,6 @@ public class controllerUser {
                 tambahjurnal.ketbaru(ket);
             } else {
                 JOptionPane.showMessageDialog(tambahjurnal, "Tidak ada keterangan tambahan yg dimasukkan");
-            }
-        }
-    }
-
-    private class sumbit implements ActionListener {
-
-        public sumbit() {
-        }
-
-        @Override
-        public void actionPerformed(ActionEvent e) {
-
-            String lokasi = tambahjurnal.getLokasi();
-
-            int obyek = Integer.valueOf(tambahjurnal.getObyek());
-            String namanya = tambahjurnal.getNamanya();
-            if (lokasi != null && namanya != null && !lokasi.equalsIgnoreCase("")) {
-                boolean test = mPegawai.tambahAwal(nip, namanya, lokasi, obyek);
-                JOptionPane.showMessageDialog(tambahjurnal, "Pendataan berhasil dimasukkan");
-                tambahjurnal.lokasi1().setEnabled(false);
-                tambahjurnal.nama().setEnabled(false);
-                tambahjurnal.add().setEnabled(false);
-                tambahjurnal.obyek().disable();
-                tambahjurnal.tambahobpajak().setEnabled(false);
-            } else {
-                JOptionPane.showMessageDialog(tambahjurnal, "Terjadi Kesalahan");
             }
         }
     }
@@ -284,14 +284,22 @@ public class controllerUser {
 
         @Override
         public void actionPerformed(ActionEvent e) {
-            String text = tambahjurnal.getKegiatan();
-            int pilihan = JOptionPane.showConfirmDialog(tambahjurnal, "Kembali ke beranda? ", " Konfirmasi", JOptionPane.YES_NO_OPTION);
-            if (pilihan == JOptionPane.YES_OPTION && text != null) {
+            int id = Integer.valueOf(mPegawai.getID(nip));
+            String namanya = tambahjurnal.getNamanya();
+            String lokasi = tambahjurnal.getLokasi();
+            int pilihan = JOptionPane.showConfirmDialog(tambahjurnal, "Kembali ke beranda? Apabila Anda telah memasukkan data,"
+                    + "/n data tidak akan tersimpan", " Konfirmasi", JOptionPane.YES_NO_OPTION);
+            if (pilihan == JOptionPane.YES_OPTION && namanya != null && lokasi != null && !namanya.equalsIgnoreCase("") && !lokasi.equalsIgnoreCase("")) {
+                boolean hapus = mPegawai.hapusDetail(id);
+                boolean hapusjuga = mPegawai.hapusJurnal(id);
                 JOptionPane.showMessageDialog(tambahjurnal, "Data tidak tersimpan.");
                 tambahjurnal.dispose();
                 new controllerUser(nip, nama);
 
+            } else if (pilihan==JOptionPane.YES_OPTION&&namanya==null&&lokasi==null){
+                 tambahjurnal.tabeljurnal(mPegawai.bacaJurnalNowSatuLokasi(nip, namanya));
             }
+            
 
         }
     }
@@ -438,6 +446,33 @@ public class controllerUser {
         }
     }
 
+    private class sumbit implements ActionListener {
+
+        public sumbit() {
+        }
+
+        @Override
+        public void actionPerformed(ActionEvent e) {
+
+            String lokasi = tambahjurnal.getLokasi();
+
+            int obyek = Integer.valueOf(tambahjurnal.getObyek());
+            String namanya = tambahjurnal.getNamanya();
+            if (lokasi != null && namanya != null && !lokasi.equalsIgnoreCase("") && !namanya.equalsIgnoreCase("")) {
+                boolean test = mPegawai.tambahAwal(nip, namanya, lokasi, obyek);
+                JOptionPane.showMessageDialog(tambahjurnal, "Nama Wajib Pajak berhasil dimasukkan, Masukkan hasil pendataan.");
+                tambahjurnal.lokasi1().setEnabled(false);
+                tambahjurnal.nama().setEnabled(false);
+                tambahjurnal.add().setEnabled(false);
+                tambahjurnal.obyek().disable();
+                tambahjurnal.tambahobpajak().setEnabled(false);
+                tambahjurnal.kegkeg().setEnabled(true);
+            } else {
+                JOptionPane.showMessageDialog(tambahjurnal, "Nama wajib pajak, lokasi, dan obyek pajak harus terisi");
+            }
+        }
+    }
+
     private class simpanjurnalListener implements ActionListener {
 
         public simpanjurnalListener() {
@@ -461,7 +496,6 @@ public class controllerUser {
                 JOptionPane.showMessageDialog(login, "Kegiatan berhasil ditambahkan. Masukkan data kegiatan dengan lokasi yang sama apabila masih ada, kemudian klik simpan.");
                 tambahjurnal.tabeljurnal(mPegawai.bacaJurnalNowSatuLokasi(nip, namanya));
                 tambahjurnal.keg("");
-
             }
 
         }
@@ -484,7 +518,7 @@ public class controllerUser {
                 int level = mPegawai.login(nama, nip);
                 if (level == 0) {
                     JOptionPane.showMessageDialog(login, "NIP tidak sesuai dengan nama yang dipilih");
-                } else if(level==1){
+                } else if (level == 1) {
                     String jabatan1 = mPegawai.getJabatan(login.nip());
                     System.out.println("jabatannya adalah= " + jabatan1);
                     System.out.println(nip);

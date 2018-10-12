@@ -590,6 +590,42 @@ public class pegawai {
         }
         return false;
     }
+    
+     public boolean hapusDetail(int idJurnal) {
+        String query = "DELETE FROM detail where idjurnal=?";
+        try {
+            PreparedStatement st = koneksi.prepareStatement(query);
+            st.setInt(1, idJurnal);
+            int status = st.executeUpdate();
+            if (status > 0) {
+                return true;
+            } else {
+                return false;
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+            e.getMessage();
+        }
+        return false;
+    }
+     
+      public boolean hapusJurnal(int idjurnal) {
+        String query = "DELETE FROM jurnal where idjurnal=?";
+        try {
+            PreparedStatement st = koneksi.prepareStatement(query);
+            st.setInt(1, idjurnal);
+            int status = st.executeUpdate();
+            if (status > 0) {
+                return true;
+            } else {
+                return false;
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+            e.getMessage();
+        }
+        return false;
+    }
 
     public boolean export(String nip, String nama, String jabatan, Date tanggal) throws FileNotFoundException, IOException, SQLException {
         String query = "select j.tanggal, j.namaWajibPajak, j.alamat, o.obyekPajak,  d.kegiatan, k.keterangan from jurnal j join obyekpajak o on j.obyekpajak=o.idobyek"
