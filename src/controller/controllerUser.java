@@ -101,6 +101,7 @@ public class controllerUser {
         tambahjurnal.setLocationRelativeTo(null);
         tambahjurnal.addKeterangan(new tambahketerangan());
         tambahjurnal.addObPajak(new tambahObyek());
+        tambahjurnal.kegkeg().disable();
     }
 
     public controllerUser(String nip, int a, int b, String nama) {
@@ -172,6 +173,7 @@ public class controllerUser {
                 tambahjurnal.add().setEnabled(false);
                 tambahjurnal.obyek().disable();
                 tambahjurnal.tambahobpajak().setEnabled(false);
+                tambahjurnal.kegkeg().enable();
             } else if (lokasi == null && namanya == null && lokasi.equalsIgnoreCase("") && namanya.equalsIgnoreCase("")&&kegiatan!=null &&!kegiatan.equalsIgnoreCase("")) {
                 JOptionPane.showMessageDialog(tambahjurnal, "Nama wajib pajak, lokasi, dan obyek pajak harus terisi terlebih dahulu");
             }
