@@ -166,13 +166,12 @@ public class controllerUser {
             int obyek = Integer.valueOf(tambahjurnal.getObyek());
             String namanya = tambahjurnal.getNamanya();
             if (lokasi != null && namanya != null && !lokasi.equalsIgnoreCase("") && !namanya.equalsIgnoreCase("")) {
-                boolean test = mPegawai.tambahAwal(nip, namanya, lokasi, obyek);
+                boolean test = mPegawai.tambahAwal(nip, namanya, lokasi);
                 JOptionPane.showMessageDialog(tambahjurnal, "Nama Wajib Pajak berhasil dimasukkan, Masukkan hasil pendataan.");
                 tambahjurnal.lokasi1().setEnabled(false);
                 tambahjurnal.nama().setEnabled(false);
                 tambahjurnal.add().setEnabled(false);
-                tambahjurnal.obyek().disable();
-                tambahjurnal.tambahobpajak().setEnabled(false);
+                 
                 tambahjurnal.kegkeg().enable();
             } else if (lokasi == null && namanya == null && lokasi.equalsIgnoreCase("") && namanya.equalsIgnoreCase("")&&kegiatan!=null &&!kegiatan.equalsIgnoreCase("")) {
                 JOptionPane.showMessageDialog(tambahjurnal, "Nama wajib pajak, lokasi, dan obyek pajak harus terisi terlebih dahulu");
@@ -495,7 +494,7 @@ public class controllerUser {
                 JOptionPane.showMessageDialog(tambahjurnal,"Nama Wajib Pajak dan lokasi harus diisi dan ditambahkan terlebih dulu!");
             } 
             else {
-                boolean test = mPegawai.tambahJurnal(id, kegiatan, ket);
+                boolean test = mPegawai.tambahJurnal(id, kegiatan, ket,obyek);
                 JOptionPane.showMessageDialog(login, "Kegiatan berhasil ditambahkan. Masukkan data kegiatan dengan lokasi yang sama apabila masih ada, kemudian klik simpan.");
                 tambahjurnal.tabeljurnal(mPegawai.bacaJurnalNowSatuLokasi(nip, namanya));
                 tambahjurnal.keg("");

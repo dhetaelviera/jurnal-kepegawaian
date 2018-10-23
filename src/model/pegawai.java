@@ -258,8 +258,8 @@ public class pegawai {
     }
 
     public DefaultTableModel bacaJurnal(String nip) {
-        String query = "select j.tanggal, j.namaWajibPajak, j.alamat, o.obyekPajak,  d.kegiatan, k.keterangan from jurnal j join obyekpajak o on j.obyekpajak=o.idobyek"
-                + " join detail d on d.idjurnal=j.idjurnal join keterangan k on k.idketerangan=d.keterangan where j.pegawai =? ";
+        String query = "select j.tanggal, j.namaWajibPajak, j.alamat, o.obyekPajak,  d.kegiatan, k.keterangan from jurnal j"
+                + " join detail d on d.idjurnal=j.idjurnal join obyekpajak o on o.idobyek=d.obyek join keterangan k on k.idketerangan=d.keterangan where j.pegawai =? ";
         String namaKolom[] = {"Tanggal", "Nama Wajib Pajak", "Alamat", "Obyek Pajak", "Hasil Pendataan", "Keterangan"};
         DefaultTableModel tabel = new DefaultTableModel(null, namaKolom);
         try {
@@ -285,8 +285,8 @@ public class pegawai {
     }
 
     public DefaultTableModel bacaJurnalNow(String nip) {
-        String query = "select j.tanggal, j.namaWajibPajak, j.alamat, o.obyekPajak,  d.kegiatan, k.keterangan from jurnal j join obyekpajak o on j.obyekpajak=o.idobyek"
-                + " join detail d on d.idjurnal=j.idjurnal join keterangan k on k.idketerangan=d.keterangan where j.pegawai =? and j.tanggal=current_date ";
+        String query = "select j.tanggal, j.namaWajibPajak, j.alamat, o.obyekPajak,  d.kegiatan, k.keterangan from jurnal j"
+                + " join detail d on d.idjurnal=j.idjurnal join obyekpajak o on  o.idobyek=d.obyek join keterangan k on k.idketerangan=d.keterangan where j.pegawai =? and j.tanggal=current_date ";
         String namaKolom[] = {"Tanggal", "Nama Wajib Pajak", "Alamat", "Obyek Pajak", "Hasil Pendataan", "Keterangan"};
         DefaultTableModel tabel = new DefaultTableModel(null, namaKolom);
         try {
@@ -312,8 +312,8 @@ public class pegawai {
     }
 
     public DefaultTableModel bacaJurnalNowSatuLokasi(String nip, String nama) {
-        String query = "select j.namaWajibPajak, j.alamat, o.obyekPajak,  d.kegiatan, k.keterangan from jurnal j join obyekpajak o on j.obyekpajak=o.idobyek"
-                + " join detail d on d.idjurnal=j.idjurnal join keterangan k on k.idketerangan=d.keterangan where j.pegawai =? and j.namaWajibPajak=? and j.tanggal=current_date ";
+        String query = "select j.namaWajibPajak, j.alamat, o.obyekPajak,  d.kegiatan, k.keterangan from jurnal j"
+                + " join detail d on d.idjurnal=j.idjurnal join obyekpajak o on o.idobyek=d.obyek join keterangan k on k.idketerangan=d.keterangan where j.pegawai =? and j.namaWajibPajak=? and j.tanggal=current_date ";
         String namaKolom[] = {"Nama Wajib Pajak", "Alamat", "Obyek Pajak", "Hasil Pendataan", "Keterangan"};
         DefaultTableModel tabel = new DefaultTableModel(null, namaKolom);
         try {
@@ -340,8 +340,8 @@ public class pegawai {
     }
 
     public DefaultTableModel bacaTabelJurnalTanggal(String nip, Date tanggal) throws ParseException {
-        String query = "select j.tanggal, j.namaWajibPajak, j.alamat, o.obyekPajak,  d.kegiatan, k.keterangan from jurnal j join obyekpajak o on j.obyekpajak=o.idobyek"
-                + " join detail d on d.idjurnal=j.idjurnal join keterangan k on k.idketerangan=d.keterangan where j.pegawai =? and j.tanggal=? ";
+        String query = "select j.tanggal, j.namaWajibPajak, j.alamat, o.obyekPajak,  d.kegiatan, k.keterangan from jurnal j"
+                + " join detail d on d.idjurnal=j.idjurnal join obyekpajak o on o.idobyek=d.obyek join keterangan k on k.idketerangan=d.keterangan where j.pegawai =? and j.tanggal=? ";
         String namaKolom[] = {"Tanggal", "Nama Wajib Pajak", "Alamat", "Obyek Pajak", "Hasil Pendataan", "Keterangan"};
         DefaultTableModel tabel = new DefaultTableModel(null, namaKolom);
         try {
@@ -374,8 +374,8 @@ public class pegawai {
     }
 
     public DefaultTableModel bacaTabelJurnalBulan(String nip, Date tanggal) throws ParseException {
-        String query = "select j.tanggal, j.namaWajibPajak, j.alamat, o.obyekPajak,  d.kegiatan, k.keterangan from jurnal j join obyekpajak o on j.obyekpajak=o.idobyek"
-                + " join detail d on d.idjurnal=j.idjurnal join keterangan k on k.idketerangan=d.keterangan where j.pegawai =? and  SUBSTRING(j.tanggal,6,2)=? ORDER BY tanggal  asc;";
+        String query = "select j.tanggal, j.namaWajibPajak, j.alamat, o.obyekPajak,  d.kegiatan, k.keterangan from jurnal j"
+                + " join detail d on d.idjurnal=j.idjurnal  join obyekpajak o on o.idobyek=d.obyek join keterangan k on k.idketerangan=d.keterangan where j.pegawai =? and  SUBSTRING(j.tanggal,6,2)=? ORDER BY tanggal  asc;";
         String namaKolom[] = {"Tanggal", "Nama Wajib Pajak", "Alamat", "Obyek Pajak", "Hasil Pendataan", "Keterangan"};
 
         DefaultTableModel tabel = new DefaultTableModel(null, namaKolom);
@@ -412,8 +412,8 @@ public class pegawai {
     }
 
     public DefaultTableModel bacaTabelJurnalTahun(String nip, Date tanggal) throws ParseException {
-        String query = "select j.tanggal, j.namaWajibPajak, j.alamat, o.obyekPajak,  d.kegiatan, k.keterangan from jurnal j join obyekpajak o on j.obyekpajak=o.idobyek"
-                + " join detail d on d.idjurnal=j.idjurnal join keterangan k on k.idketerangan=d.keterangan where j.pegawai =? and SUBSTRING(j.tanggal,1,4)=? ORDER BY tanggal  desc; ";
+        String query = "select j.tanggal, j.namaWajibPajak, j.alamat, o.obyekPajak,  d.kegiatan, k.keterangan from jurnal j"
+                + " join detail d on d.idjurnal=j.idjurnal  join obyekpajak o on d.obyek=o.idobyek join keterangan k on k.idketerangan=d.keterangan where j.pegawai =? and SUBSTRING(j.tanggal,1,4)=? ORDER BY tanggal  desc; ";
         String namaKolom[] = {"Tanggal", "Nama Wajib Pajak", "Alamat", "Obyek Pajak", "Hasil Pendataan", "Keterangan"};
 
         DefaultTableModel tabel = new DefaultTableModel(null, namaKolom);
@@ -450,8 +450,8 @@ public class pegawai {
     }
 
     public DefaultTableModel bacaTabelJurnalRange(String nip, Date tanggal1, Date tanggal2) throws ParseException {
-        String query = "select j.tanggal, j.namaWajibPajak, j.alamat, o.obyekPajak,  d.kegiatan, k.keterangan from jurnal j join obyekpajak o on j.obyekpajak=o.idobyek"
-                + " join detail d on d.idjurnal=j.idjurnal join keterangan k on k.idketerangan=d.keterangan where j.pegawai =? and j.tanggal BETWEEN ? and ? ORDER BY tanggal  desc; ";
+        String query = "select j.tanggal, j.namaWajibPajak, j.alamat, o.obyekPajak,  d.kegiatan, k.keterangan from jurnal j"
+                + " join detail d on d.idjurnal=j.idjurnal  join obyekpajak o on d.obyek=o.idobyek join keterangan k on k.idketerangan=d.keterangan where j.pegawai =? and j.tanggal BETWEEN ? and ? ORDER BY tanggal  desc; ";
         String namaKolom[] = {"Tanggal", "Nama Wajib Pajak", "Alamat", "Obyek Pajak", "Hasil Pendataan", "Keterangan"};
 
         DefaultTableModel tabel = new DefaultTableModel(null, namaKolom);
@@ -548,15 +548,14 @@ public class pegawai {
         return false;
     }
 
-    public boolean tambahAwal(String nip, String nama, String alamat, int obyekPajak) {
-        String query = "insert into `jurnal` (`tanggal`,`pegawai`,`namaWajibPajak`, `alamat`, `obyekPajak`)VALUES(CURRENT_DATE,?,?,?,?)";
+    public boolean tambahAwal(String nip, String nama, String alamat) {
+        String query = "insert into `jurnal` (`tanggal`,`pegawai`,`namaWajibPajak`, `alamat`)VALUES(CURRENT_DATE,?,?,?)";
         System.out.println(query);
         try {
             PreparedStatement st = koneksi.prepareStatement(query);
             st.setString(1, nip);
             st.setString(2, nama);
             st.setString(3, alamat);
-            st.setInt(4, obyekPajak);
 
             int status = st.executeUpdate();
             if (status > 0) {
@@ -571,14 +570,15 @@ public class pegawai {
         return false;
     }
 
-    public boolean tambahJurnal(int idJurnal, String kegiatan, int keterangan) {
-        String query = "insert into `detail` (`idjurnal`,`kegiatan`,`keterangan`)VALUES(?,?,?)";
+    public boolean tambahJurnal(int idJurnal, String kegiatan, int keterangan, int obyek) {
+        String query = "insert into `detail` (`idjurnal`,`kegiatan`,`keterangan`,`obyek`)VALUES(?,?,?,?)";
         System.out.println(query);
         try {
             PreparedStatement st = koneksi.prepareStatement(query);
             st.setInt(1, idJurnal);
             st.setString(2, kegiatan);
             st.setInt(3, keterangan);
+            st.setInt(4, obyek);
             int status = st.executeUpdate();
             if (status > 0) {
                 return true;
