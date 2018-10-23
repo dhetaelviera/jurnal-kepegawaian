@@ -82,9 +82,9 @@ public class login extends javax.swing.JFrame {
         nip.setOpaque(false);
         getContentPane().add(nip, new org.netbeans.lib.awtextra.AbsoluteConstraints(350, 350, 260, 30));
 
-        username.setBackground(new java.awt.Color(51, 153, 0));
-        username.setFont(new java.awt.Font("Segoe UI Semibold", 0, 14)); // NOI18N
-        username.setForeground(new java.awt.Color(255, 255, 102));
+        username.setBackground(new java.awt.Color(153, 0, 0));
+        username.setFont(new java.awt.Font("Microsoft YaHei", 0, 14)); // NOI18N
+        username.setForeground(new java.awt.Color(255, 255, 255));
         username.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 usernameActionPerformed(evt);

@@ -192,7 +192,7 @@ public class controllerUser {
             if (pilihan == JOptionPane.NO_OPTION) {
                 tambahjurnal.tabeljurnal(mPegawai.bacaJurnalNowSatuLokasi(nip, namanya));
             } else if (pilihan == JOptionPane.YES_OPTION) {
-                JOptionPane.showMessageDialog(tambahjurnal, "Pendataan dengan nama wajib pajak " + namanya + " Selesai");
+                JOptionPane.showMessageDialog(tambahjurnal, "Pendataan dengan nama wajib pajak " + namanya + " selesai");
                 tambahjurnal.dispose();
                 new controllerUser(nip, mPegawai.getNama(nip));
             } else {
@@ -527,7 +527,7 @@ public class controllerUser {
                     System.out.println(nip);
                     new controllerUser(nip, nama);
                     login.dispose();
-                    JOptionPane.showMessageDialog(pendataan, "Selamat datang NIP " + nama);
+                    JOptionPane.showMessageDialog(pendataan, "Selamat datang, " + nama);
 
                 }
             }
