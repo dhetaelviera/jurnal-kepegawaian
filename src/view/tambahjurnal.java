@@ -181,20 +181,12 @@ public class tambahjurnal extends javax.swing.JFrame {
     private void initComponents() {
 
         tanggal = new javax.swing.JLabel();
-        jLabel2 = new javax.swing.JLabel();
-        jLabel3 = new javax.swing.JLabel();
         tambah = new javax.swing.JButton();
         kembali = new javax.swing.JButton();
-        pendataan = new javax.swing.JButton();
-        laporan = new javax.swing.JButton();
-        jLabel4 = new javax.swing.JLabel();
-        jLabel9 = new javax.swing.JLabel();
-        jLabel10 = new javax.swing.JLabel();
         keterangan = new javax.swing.JComboBox(mKeterangan[1]);
         obyek = new javax.swing.JComboBox(mObyek[1]);
         lokasi = new javax.swing.JTextField();
         nama = new javax.swing.JTextField();
-        jLabel11 = new javax.swing.JLabel();
         jScrollPane1 = new javax.swing.JScrollPane();
         kegiatan = new javax.swing.JTextArea();
         jScrollPane2 = new javax.swing.JScrollPane();
@@ -203,69 +195,69 @@ public class tambahjurnal extends javax.swing.JFrame {
         selesai = new javax.swing.JButton();
         addObyek = new javax.swing.JButton();
         addKet = new javax.swing.JButton();
+        pendataan = new javax.swing.JButton();
+        laporan = new javax.swing.JButton();
+        jLabel2 = new javax.swing.JLabel();
+        jLabel1 = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
-        setPreferredSize(new java.awt.Dimension(600, 500));
+        setMinimumSize(new java.awt.Dimension(870, 750));
+        setPreferredSize(new java.awt.Dimension(870, 750));
+        setResizable(false);
         getContentPane().setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
-        getContentPane().add(tanggal, new org.netbeans.lib.awtextra.AbsoluteConstraints(90, 50, 120, 20));
+        getContentPane().add(tanggal, new org.netbeans.lib.awtextra.AbsoluteConstraints(50, 190, 120, 20));
 
-        jLabel2.setText("Kegiatan:");
-        getContentPane().add(jLabel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 180, -1, 30));
+        tambah.setBackground(new java.awt.Color(0, 204, 204));
+        tambah.setFont(new java.awt.Font("Microsoft YaHei", 0, 14)); // NOI18N
+        tambah.setText("Simpan");
+        getContentPane().add(tambah, new org.netbeans.lib.awtextra.AbsoluteConstraints(620, 350, -1, -1));
 
-        jLabel3.setText("Keterangan:");
-        getContentPane().add(jLabel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 250, -1, -1));
+        kembali.setBackground(new java.awt.Color(204, 0, 0));
+        kembali.setFont(new java.awt.Font("Microsoft YaHei", 0, 14)); // NOI18N
+        kembali.setForeground(new java.awt.Color(255, 255, 255));
+        kembali.setText("Kembali");
+        kembali.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                kembaliActionPerformed(evt);
+            }
+        });
+        getContentPane().add(kembali, new org.netbeans.lib.awtextra.AbsoluteConstraints(620, 310, -1, -1));
 
-        tambah.setText("simpan");
-        getContentPane().add(tambah, new org.netbeans.lib.awtextra.AbsoluteConstraints(90, 280, -1, -1));
-
-        kembali.setText("kembali");
-        getContentPane().add(kembali, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 280, -1, -1));
-
-        pendataan.setText("pendataan");
-        getContentPane().add(pendataan, new org.netbeans.lib.awtextra.AbsoluteConstraints(70, 10, -1, -1));
-
-        laporan.setText("laporan");
-        getContentPane().add(laporan, new org.netbeans.lib.awtextra.AbsoluteConstraints(180, 10, -1, -1));
-
-        jLabel4.setText("Tanggal:");
-        getContentPane().add(jLabel4, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 50, -1, -1));
-
-        jLabel9.setText("Nama Wajib Pajak/Obyek Pajak:");
-        getContentPane().add(jLabel9, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 80, -1, -1));
-
-        jLabel10.setText("Obyek Pajak:");
-        getContentPane().add(jLabel10, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 140, -1, -1));
-
-        keterangan.setBackground(new java.awt.Color(51, 153, 0));
-        keterangan.setFont(new java.awt.Font("Segoe UI Semibold", 0, 14)); // NOI18N
-        keterangan.setForeground(new java.awt.Color(255, 255, 102));
+        keterangan.setBackground(new java.awt.Color(204, 0, 51));
+        keterangan.setFont(new java.awt.Font("Verdana", 0, 14)); // NOI18N
+        keterangan.setForeground(new java.awt.Color(255, 255, 255));
         keterangan.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 keteranganActionPerformed(evt);
             }
         });
-        getContentPane().add(keterangan, new org.netbeans.lib.awtextra.AbsoluteConstraints(90, 250, 120, 20));
+        getContentPane().add(keterangan, new org.netbeans.lib.awtextra.AbsoluteConstraints(620, 270, 170, -1));
 
-        obyek.setBackground(new java.awt.Color(51, 153, 0));
-        obyek.setFont(new java.awt.Font("Segoe UI Semibold", 0, 14)); // NOI18N
-        obyek.setForeground(new java.awt.Color(255, 255, 102));
+        obyek.setBackground(new java.awt.Color(204, 0, 51));
+        obyek.setFont(new java.awt.Font("Verdana", 0, 14)); // NOI18N
+        obyek.setForeground(new java.awt.Color(255, 255, 255));
         obyek.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 obyekActionPerformed(evt);
             }
         });
-        getContentPane().add(obyek, new org.netbeans.lib.awtextra.AbsoluteConstraints(100, 140, 120, 20));
-        getContentPane().add(lokasi, new org.netbeans.lib.awtextra.AbsoluteConstraints(70, 110, 280, -1));
-        getContentPane().add(nama, new org.netbeans.lib.awtextra.AbsoluteConstraints(220, 80, 240, -1));
+        getContentPane().add(obyek, new org.netbeans.lib.awtextra.AbsoluteConstraints(180, 340, 180, -1));
 
-        jLabel11.setText("Lokasi:");
-        getContentPane().add(jLabel11, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 110, -1, -1));
+        lokasi.setFont(new java.awt.Font("Verdana", 1, 14)); // NOI18N
+        lokasi.setBorder(null);
+        lokasi.setOpaque(false);
+        getContentPane().add(lokasi, new org.netbeans.lib.awtextra.AbsoluteConstraints(180, 280, 290, 30));
+
+        nama.setFont(new java.awt.Font("Verdana", 1, 14)); // NOI18N
+        nama.setBorder(null);
+        nama.setOpaque(false);
+        getContentPane().add(nama, new org.netbeans.lib.awtextra.AbsoluteConstraints(180, 230, 290, 30));
 
         kegiatan.setColumns(20);
         kegiatan.setRows(5);
         jScrollPane1.setViewportView(kegiatan);
 
-        getContentPane().add(jScrollPane1, new org.netbeans.lib.awtextra.AbsoluteConstraints(70, 180, 280, 60));
+        getContentPane().add(jScrollPane1, new org.netbeans.lib.awtextra.AbsoluteConstraints(620, 180, 240, 70));
 
         jurnal.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
@@ -280,19 +272,44 @@ public class tambahjurnal extends javax.swing.JFrame {
         ));
         jScrollPane2.setViewportView(jurnal);
 
-        getContentPane().add(jScrollPane2, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 330, 480, 110));
+        getContentPane().add(jScrollPane2, new org.netbeans.lib.awtextra.AbsoluteConstraints(50, 430, 750, 150));
 
-        submit.setText("tambahkan");
-        getContentPane().add(submit, new org.netbeans.lib.awtextra.AbsoluteConstraints(370, 140, -1, -1));
+        submit.setBackground(new java.awt.Color(0, 204, 204));
+        submit.setFont(new java.awt.Font("Microsoft YaHei", 0, 14)); // NOI18N
+        submit.setText("Tambah");
+        getContentPane().add(submit, new org.netbeans.lib.awtextra.AbsoluteConstraints(180, 390, -1, -1));
 
-        selesai.setText("selesai");
-        getContentPane().add(selesai, new org.netbeans.lib.awtextra.AbsoluteConstraints(210, 280, -1, -1));
+        selesai.setBackground(new java.awt.Color(255, 255, 204));
+        selesai.setFont(new java.awt.Font("Microsoft YaHei", 0, 14)); // NOI18N
+        selesai.setText("Selesai");
+        getContentPane().add(selesai, new org.netbeans.lib.awtextra.AbsoluteConstraints(710, 350, -1, -1));
 
         addObyek.setText("+");
-        getContentPane().add(addObyek, new org.netbeans.lib.awtextra.AbsoluteConstraints(230, 140, -1, -1));
+        getContentPane().add(addObyek, new org.netbeans.lib.awtextra.AbsoluteConstraints(370, 340, -1, -1));
 
         addKet.setText("+");
-        getContentPane().add(addKet, new org.netbeans.lib.awtextra.AbsoluteConstraints(230, 250, -1, -1));
+        getContentPane().add(addKet, new org.netbeans.lib.awtextra.AbsoluteConstraints(800, 270, -1, -1));
+
+        pendataan.setBackground(new java.awt.Color(255, 204, 204));
+        pendataan.setFont(new java.awt.Font("Microsoft YaHei", 1, 14)); // NOI18N
+        pendataan.setText("Pendataan");
+        pendataan.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                pendataanActionPerformed(evt);
+            }
+        });
+        getContentPane().add(pendataan, new org.netbeans.lib.awtextra.AbsoluteConstraints(90, 140, 130, 30));
+
+        laporan.setBackground(new java.awt.Color(255, 204, 204));
+        laporan.setFont(new java.awt.Font("Microsoft YaHei", 1, 14)); // NOI18N
+        laporan.setText("Laporan");
+        getContentPane().add(laporan, new org.netbeans.lib.awtextra.AbsoluteConstraints(230, 140, 110, 30));
+
+        jLabel2.setIcon(new javax.swing.ImageIcon("C:\\Users\\bidang 3\\Downloads\\atas.png")); // NOI18N
+        getContentPane().add(jLabel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 870, 110));
+
+        jLabel1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/view/PKL/create (2).png"))); // NOI18N
+        getContentPane().add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, -1, 780));
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
@@ -304,6 +321,14 @@ public class tambahjurnal extends javax.swing.JFrame {
     private void obyekActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_obyekActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_obyekActionPerformed
+
+    private void pendataanActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_pendataanActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_pendataanActionPerformed
+
+    private void kembaliActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_kembaliActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_kembaliActionPerformed
 
     /**
      * @param args the command line arguments
@@ -343,12 +368,8 @@ public class tambahjurnal extends javax.swing.JFrame {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton addKet;
     private javax.swing.JButton addObyek;
-    private javax.swing.JLabel jLabel10;
-    private javax.swing.JLabel jLabel11;
+    private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
-    private javax.swing.JLabel jLabel3;
-    private javax.swing.JLabel jLabel4;
-    private javax.swing.JLabel jLabel9;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JTable jurnal;

@@ -151,7 +151,6 @@ public class Pendataan extends javax.swing.JFrame {
         jScrollPane1 = new javax.swing.JScrollPane();
         jurnal = new javax.swing.JTable();
         tambahJurnal = new javax.swing.JButton();
-        jLabel2 = new javax.swing.JLabel();
         cariBulan = new javax.swing.JButton();
         cari = new javax.swing.JButton();
         calendar = new org.jdesktop.swingx.JXDatePicker();
@@ -159,21 +158,18 @@ public class Pendataan extends javax.swing.JFrame {
         jabatan = new javax.swing.JLabel();
         nip = new javax.swing.JLabel();
         nama = new javax.swing.JLabel();
-        jLabel5 = new javax.swing.JLabel();
-        jLabel6 = new javax.swing.JLabel();
-        jLabel7 = new javax.swing.JLabel();
-        jLabel8 = new javax.swing.JLabel();
-        laporan = new javax.swing.JButton();
-        pendataan = new javax.swing.JButton();
         tahun = new javax.swing.JButton();
         reset = new javax.swing.JButton();
         tanggalnow = new javax.swing.JLabel();
-        golruang = new javax.swing.JLabel();
-        jLabel9 = new javax.swing.JLabel();
         keluar = new javax.swing.JButton();
+        pendataan = new javax.swing.JButton();
+        laporan = new javax.swing.JButton();
+        jLabel3 = new javax.swing.JLabel();
+        golruang = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
-        setPreferredSize(new java.awt.Dimension(600, 500));
+        setMinimumSize(new java.awt.Dimension(870, 750));
+        setPreferredSize(new java.awt.Dimension(870, 750));
         getContentPane().setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
         jurnal.setModel(new javax.swing.table.DefaultTableModel(
@@ -197,19 +193,22 @@ public class Pendataan extends javax.swing.JFrame {
         });
         jScrollPane1.setViewportView(jurnal);
 
-        getContentPane().add(jScrollPane1, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 300, 460, 160));
+        getContentPane().add(jScrollPane1, new org.netbeans.lib.awtextra.AbsoluteConstraints(50, 440, 750, 150));
 
-        tambahJurnal.setText("tambah jurnal");
-        getContentPane().add(tambahJurnal, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 260, -1, -1));
+        tambahJurnal.setBackground(new java.awt.Color(0, 204, 204));
+        tambahJurnal.setFont(new java.awt.Font("Microsoft YaHei", 0, 14)); // NOI18N
+        tambahJurnal.setText("Tambah Kinerja");
+        getContentPane().add(tambahJurnal, new org.netbeans.lib.awtextra.AbsoluteConstraints(150, 400, -1, -1));
 
-        jLabel2.setText("Tanggal:");
-        getContentPane().add(jLabel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 210, -1, -1));
-
+        cariBulan.setBackground(new java.awt.Color(255, 204, 204));
+        cariBulan.setFont(new java.awt.Font("Microsoft YaHei", 0, 14)); // NOI18N
         cariBulan.setText("bulan");
-        getContentPane().add(cariBulan, new org.netbeans.lib.awtextra.AbsoluteConstraints(250, 240, 70, -1));
+        getContentPane().add(cariBulan, new org.netbeans.lib.awtextra.AbsoluteConstraints(690, 310, 90, -1));
 
+        cari.setBackground(new java.awt.Color(255, 204, 204));
+        cari.setFont(new java.awt.Font("Microsoft YaHei", 0, 14)); // NOI18N
         cari.setText("tanggal");
-        getContentPane().add(cari, new org.netbeans.lib.awtextra.AbsoluteConstraints(250, 210, -1, -1));
+        getContentPane().add(cari, new org.netbeans.lib.awtextra.AbsoluteConstraints(690, 280, 90, -1));
 
         calendar.setBackground(new java.awt.Color(255, 75, 109));
         calendar.setForeground(new java.awt.Color(255, 255, 255));
@@ -218,43 +217,52 @@ public class Pendataan extends javax.swing.JFrame {
                 calendarActionPerformed(evt);
             }
         });
-        getContentPane().add(calendar, new org.netbeans.lib.awtextra.AbsoluteConstraints(80, 210, 160, -1));
-        getContentPane().add(pangkat, new org.netbeans.lib.awtextra.AbsoluteConstraints(80, 180, 100, 20));
-        getContentPane().add(jabatan, new org.netbeans.lib.awtextra.AbsoluteConstraints(80, 150, 270, 20));
-        getContentPane().add(nip, new org.netbeans.lib.awtextra.AbsoluteConstraints(70, 90, 160, 20));
-        getContentPane().add(nama, new org.netbeans.lib.awtextra.AbsoluteConstraints(80, 120, 160, 20));
+        getContentPane().add(calendar, new org.netbeans.lib.awtextra.AbsoluteConstraints(510, 280, 170, -1));
 
-        jLabel5.setText("NIP:");
-        getContentPane().add(jLabel5, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 90, -1, -1));
+        pangkat.setFont(new java.awt.Font("Verdana", 1, 14)); // NOI18N
+        getContentPane().add(pangkat, new org.netbeans.lib.awtextra.AbsoluteConstraints(160, 340, 290, 30));
 
-        jLabel6.setText("Jabatan:");
-        getContentPane().add(jLabel6, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 150, -1, -1));
+        jabatan.setFont(new java.awt.Font("Verdana", 1, 14)); // NOI18N
+        getContentPane().add(jabatan, new org.netbeans.lib.awtextra.AbsoluteConstraints(160, 290, 290, 30));
 
-        jLabel7.setText("Cari berdasarkan:");
-        getContentPane().add(jLabel7, new org.netbeans.lib.awtextra.AbsoluteConstraints(250, 190, -1, -1));
+        nip.setFont(new java.awt.Font("Verdana", 1, 14)); // NOI18N
+        getContentPane().add(nip, new org.netbeans.lib.awtextra.AbsoluteConstraints(160, 200, 290, 30));
 
-        jLabel8.setText("Nama:");
-        getContentPane().add(jLabel8, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 120, -1, -1));
+        nama.setFont(new java.awt.Font("Verdana", 1, 14)); // NOI18N
+        getContentPane().add(nama, new org.netbeans.lib.awtextra.AbsoluteConstraints(160, 240, 290, 30));
 
-        laporan.setText("Laporan");
-        getContentPane().add(laporan, new org.netbeans.lib.awtextra.AbsoluteConstraints(130, 20, -1, -1));
-
-        pendataan.setText("Pendataan");
-        getContentPane().add(pendataan, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 20, -1, -1));
-
+        tahun.setBackground(new java.awt.Color(255, 204, 204));
+        tahun.setFont(new java.awt.Font("Microsoft YaHei", 0, 14)); // NOI18N
         tahun.setText("tahun");
-        getContentPane().add(tahun, new org.netbeans.lib.awtextra.AbsoluteConstraints(330, 210, -1, -1));
+        getContentPane().add(tahun, new org.netbeans.lib.awtextra.AbsoluteConstraints(690, 340, 90, -1));
 
-        reset.setText("reset tabel");
-        getContentPane().add(reset, new org.netbeans.lib.awtextra.AbsoluteConstraints(140, 260, -1, -1));
-        getContentPane().add(tanggalnow, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 50, 160, 20));
-        getContentPane().add(golruang, new org.netbeans.lib.awtextra.AbsoluteConstraints(170, 180, 90, 20));
+        reset.setBackground(new java.awt.Color(255, 255, 204));
+        reset.setFont(new java.awt.Font("Microsoft YaHei", 0, 14)); // NOI18N
+        reset.setText("Reset Tabel");
+        getContentPane().add(reset, new org.netbeans.lib.awtextra.AbsoluteConstraints(310, 400, -1, -1));
+        getContentPane().add(tanggalnow, new org.netbeans.lib.awtextra.AbsoluteConstraints(660, 10, 160, 20));
 
-        jLabel9.setText("Pangkat:");
-        getContentPane().add(jLabel9, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 180, -1, -1));
+        keluar.setContentAreaFilled(false);
+        getContentPane().add(keluar, new org.netbeans.lib.awtextra.AbsoluteConstraints(800, 39, 50, 50));
 
-        keluar.setText("keluar");
-        getContentPane().add(keluar, new org.netbeans.lib.awtextra.AbsoluteConstraints(280, 20, -1, -1));
+        pendataan.setBackground(new java.awt.Color(255, 204, 204));
+        pendataan.setFont(new java.awt.Font("Microsoft YaHei", 1, 14)); // NOI18N
+        pendataan.setText("Pendataan");
+        pendataan.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                pendataanActionPerformed(evt);
+            }
+        });
+        getContentPane().add(pendataan, new org.netbeans.lib.awtextra.AbsoluteConstraints(90, 140, 130, 30));
+
+        laporan.setBackground(new java.awt.Color(255, 204, 204));
+        laporan.setFont(new java.awt.Font("Microsoft YaHei", 1, 14)); // NOI18N
+        laporan.setText("Laporan");
+        getContentPane().add(laporan, new org.netbeans.lib.awtextra.AbsoluteConstraints(230, 140, 110, 30));
+
+        jLabel3.setIcon(new javax.swing.ImageIcon(getClass().getResource("/view/PKL/lapor.png"))); // NOI18N
+        getContentPane().add(jLabel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 860, 790));
+        getContentPane().add(golruang, new org.netbeans.lib.awtextra.AbsoluteConstraints(150, 370, 90, 20));
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
@@ -262,6 +270,10 @@ public class Pendataan extends javax.swing.JFrame {
     private void calendarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_calendarActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_calendarActionPerformed
+
+    private void pendataanActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_pendataanActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_pendataanActionPerformed
 
     /**
      * @param args the command line arguments
@@ -304,12 +316,7 @@ public class Pendataan extends javax.swing.JFrame {
     private javax.swing.JButton cari;
     private javax.swing.JButton cariBulan;
     private javax.swing.JLabel golruang;
-    private javax.swing.JLabel jLabel2;
-    private javax.swing.JLabel jLabel5;
-    private javax.swing.JLabel jLabel6;
-    private javax.swing.JLabel jLabel7;
-    private javax.swing.JLabel jLabel8;
-    private javax.swing.JLabel jLabel9;
+    private javax.swing.JLabel jLabel3;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JLabel jabatan;
     private javax.swing.JTable jurnal;

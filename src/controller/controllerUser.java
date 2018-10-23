@@ -316,15 +316,15 @@ public class controllerUser {
             String lokasi = tambahjurnal.getLokasi();
             int pilihan = JOptionPane.showConfirmDialog(tambahjurnal, "Kembali ke beranda? Apabila Anda telah memasukkan data,"
                     + "/n data tidak akan tersimpan", " Konfirmasi", JOptionPane.YES_NO_OPTION);
-            if (pilihan == JOptionPane.YES_OPTION && namanya != null && lokasi != null && !namanya.equalsIgnoreCase("") && !lokasi.equalsIgnoreCase("")) {
+            if (pilihan == JOptionPane.YES_OPTION && namanya != null || lokasi != null || !namanya.equalsIgnoreCase("") || !lokasi.equalsIgnoreCase("")) {
                 boolean hapus = mPegawai.hapusDetail(id);
                 boolean hapusjuga = mPegawai.hapusJurnal(id);
                 JOptionPane.showMessageDialog(tambahjurnal, "Data tidak tersimpan.");
                 tambahjurnal.dispose();
-                pendataan.tabeljurnal(mPegawai.bacaJurnalNow(nip));
+               
                 new controllerUser(nip, nama);
 
-            } else if (pilihan == JOptionPane.YES_OPTION && namanya == null && lokasi == null) {
+            } else if (pilihan == JOptionPane.NO_OPTION && namanya == null && lokasi == null) {
                 tambahjurnal.tabeljurnal(mPegawai.bacaJurnalNowSatuLokasi(nip, namanya));
             }
 

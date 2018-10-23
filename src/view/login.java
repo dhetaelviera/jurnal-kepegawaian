@@ -63,26 +63,24 @@ public class login extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        jLabel1 = new javax.swing.JLabel();
-        jLabel2 = new javax.swing.JLabel();
         masuk = new javax.swing.JButton();
         nip = new javax.swing.JPasswordField();
         username = new javax.swing.JComboBox(namakombo[1]);
+        jLabel3 = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
-        setMinimumSize(new java.awt.Dimension(400, 300));
-        setPreferredSize(new java.awt.Dimension(400, 300));
+        setMinimumSize(new java.awt.Dimension(870, 750));
+        setPreferredSize(new java.awt.Dimension(870, 750));
         getContentPane().setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
-        jLabel1.setText("NIP:");
-        getContentPane().add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(100, 110, 60, -1));
+        masuk.setBackground(new java.awt.Color(255, 153, 153));
+        masuk.setFont(new java.awt.Font("Microsoft YaHei", 0, 18)); // NOI18N
+        masuk.setText("Masuk");
+        getContentPane().add(masuk, new org.netbeans.lib.awtextra.AbsoluteConstraints(373, 433, 120, 40));
 
-        jLabel2.setText("nama:");
-        getContentPane().add(jLabel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(100, 80, -1, -1));
-
-        masuk.setText("masuk");
-        getContentPane().add(masuk, new org.netbeans.lib.awtextra.AbsoluteConstraints(160, 150, -1, -1));
-        getContentPane().add(nip, new org.netbeans.lib.awtextra.AbsoluteConstraints(160, 110, 120, -1));
+        nip.setBorder(null);
+        nip.setOpaque(false);
+        getContentPane().add(nip, new org.netbeans.lib.awtextra.AbsoluteConstraints(350, 350, 260, 30));
 
         username.setBackground(new java.awt.Color(51, 153, 0));
         username.setFont(new java.awt.Font("Segoe UI Semibold", 0, 14)); // NOI18N
@@ -92,7 +90,10 @@ public class login extends javax.swing.JFrame {
                 usernameActionPerformed(evt);
             }
         });
-        getContentPane().add(username, new org.netbeans.lib.awtextra.AbsoluteConstraints(160, 80, 120, 20));
+        getContentPane().add(username, new org.netbeans.lib.awtextra.AbsoluteConstraints(340, 280, 280, 40));
+
+        jLabel3.setIcon(new javax.swing.ImageIcon(getClass().getResource("/view/PKL/login.png"))); // NOI18N
+        getContentPane().add(jLabel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 860, 800));
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
@@ -137,8 +138,7 @@ public class login extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JLabel jLabel1;
-    private javax.swing.JLabel jLabel2;
+    private javax.swing.JLabel jLabel3;
     private javax.swing.JButton masuk;
     private javax.swing.JPasswordField nip;
     private javax.swing.JComboBox<String> username;
